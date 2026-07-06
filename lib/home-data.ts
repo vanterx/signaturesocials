@@ -1,52 +1,29 @@
-import type { LucideIcon } from 'lucide-react'
-import { Music, Zap, Sparkles, Users } from 'lucide-react'
-
-export interface ValueTile {
-  icon: LucideIcon
+export interface ValueItem {
   label: string
-  glow: string
   accent: string
   desc: string
-  area: string
-  feature: boolean
 }
 
-export const VALUE_TILES: ValueTile[] = [
+export const VALUES: ValueItem[] = [
   {
-    icon: Music,
     label: 'The Music',
-    glow: 'ss-glow-purple',
     accent: '#7C3AED',
     desc: 'Curated sets from underground selectors and international headliners.',
-    area: 'a',
-    feature: true,
   },
   {
-    icon: Zap,
     label: 'The Energy',
-    glow: 'ss-glow-cyan',
     accent: '#00E5FF',
     desc: 'A dancefloor charged from the first drop to the last encore.',
-    area: 'b',
-    feature: false,
   },
   {
-    icon: Sparkles,
     label: 'The Production',
-    glow: 'ss-glow-magenta',
     accent: '#FF2D95',
     desc: 'Immersive lighting, sound and staging built for the moment.',
-    area: 'c',
-    feature: false,
   },
   {
-    icon: Users,
     label: 'The People',
-    glow: 'ss-glow-purple',
     accent: '#7C3AED',
     desc: 'A community that shows up for each other, every single time.',
-    area: 'd',
-    feature: false,
   },
 ]
 

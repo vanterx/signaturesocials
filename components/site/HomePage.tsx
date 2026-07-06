@@ -7,7 +7,7 @@ import { IndexList } from '@/components/site/IndexList'
 import { RevealSection } from '@/components/site/RevealSection'
 import { AboutSections } from '@/components/site/AboutSections'
 import { experiences } from '@/lib/experiences-data'
-import { VALUE_TILES, TICKER_ITEMS, REASONS, UPCOMING_EVENTS } from '@/lib/home-data'
+import { VALUES, TICKER_ITEMS, REASONS, UPCOMING_EVENTS } from '@/lib/home-data'
 
 const HOME_CSS = `
   @keyframes ss-fade-in-up {
@@ -164,22 +164,53 @@ const HOME_CSS = `
   }
   .ss-ticker-dot { color: rgba(248,250,252,0.35); font-size: 0.6em; }
 
-  .ss-value-tile {
-    background: #1A1A1A;
-    border-radius: 12px;
-    padding: 32px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid transparent;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+  .ss-value-item {
+    position: relative;
+    padding-top: 40px;
   }
-  .ss-value-tile:hover { transform: translateY(-4px); }
-  .ss-value-tile.ss-glow-purple:hover { border-color: rgba(124,58,237,0.6); box-shadow: 0 12px 32px rgba(124,58,237,0.2); }
-  .ss-value-tile.ss-glow-cyan:hover { border-color: rgba(0,229,255,0.6); box-shadow: 0 12px 32px rgba(0,229,255,0.2); }
-  .ss-value-tile.ss-glow-magenta:hover { border-color: rgba(255,45,149,0.6); box-shadow: 0 12px 32px rgba(255,45,149,0.2); }
-  .ss-value-feature {
-    background: linear-gradient(155deg, rgba(124,58,237,0.18), rgba(10,10,10,0.4));
+  .ss-value-num {
+    position: absolute;
+    top: -12px;
+    left: -6px;
+    font-family: var(--font-bebas);
+    font-size: clamp(4.5rem, 4vw + 3rem, 7rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(248,250,252,0.14);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    transition: -webkit-text-stroke-color 0.3s ease;
+  }
+  .ss-value-item:hover .ss-value-num { -webkit-text-stroke-color: var(--ss-accent, #7C3AED); }
+  .ss-value-label {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-bebas);
+    font-size: clamp(2rem, 1.5vw + 1.5rem, 2.75rem);
+    color: #F8FAFC;
+    margin: 0 0 12px;
+    line-height: 1;
+    transition: text-shadow 0.3s ease;
+  }
+  .ss-value-item:hover .ss-value-label { text-shadow: 0 0 28px var(--ss-accent, #7C3AED); }
+  .ss-value-line {
+    width: 44px;
+    height: 2px;
+    background: var(--ss-accent, #7C3AED);
+    margin-bottom: 16px;
+    transition: width 0.4s ease;
+  }
+  .ss-value-item:hover .ss-value-line { width: 100%; }
+  .ss-value-desc {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-inter);
+    font-size: 14px;
+    color: #CBD5E1;
+    line-height: 1.7;
+    margin: 0;
+    max-width: 380px;
   }
 
   .ss-exp-card {
@@ -208,31 +239,67 @@ const HOME_CSS = `
     margin-bottom: -8px;
   }
 
-  .ss-event-card {
+  .ss-event-row {
     position: relative;
-    overflow: hidden;
-    background: #0A0A0A;
-    border-radius: 12px;
-    border: 1px solid rgba(124,58,237,0.25);
-    padding: 32px;
-    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    padding: 26px 20px;
+    border-bottom: 1px solid rgba(248,250,252,0.12);
+    transition: background 0.3s ease, padding-left 0.3s ease;
   }
-  .ss-event-card::before {
+  .ss-event-row::before {
     content: '';
     position: absolute;
-    top: 0;
     left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #7C3AED, #00E5FF, #FF2D95);
-    opacity: 0.45;
-    transition: opacity 0.3s ease;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #7C3AED, #00E5FF);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
   }
-  .ss-event-card:hover::before { opacity: 1; }
-  .ss-event-card:hover {
-    border-color: rgba(124,58,237,0.7);
-    box-shadow: 0 12px 32px rgba(124,58,237,0.2);
-    transform: translateY(-4px);
+  .ss-event-row:hover::before { transform: scaleY(1); }
+  .ss-event-row:hover {
+    background: rgba(124,58,237,0.07);
+    padding-left: 34px;
+  }
+  .ss-event-row:hover .ss-event-name { text-shadow: 0 0 20px rgba(124,58,237,0.6); }
+  .ss-event-date {
+    display: flex;
+    flex-direction: column;
+    min-width: 104px;
+  }
+  .ss-event-date-label {
+    font-family: var(--font-inter);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #00E5FF;
+    margin-bottom: 4px;
+  }
+  .ss-event-date-main {
+    font-family: var(--font-bebas);
+    font-size: clamp(1.6rem, 1vw + 1.25rem, 2.2rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(248,250,252,0.5);
+  }
+  .ss-event-name {
+    font-family: var(--font-bebas);
+    font-size: clamp(1.6rem, 1.5vw + 1rem, 2.4rem);
+    line-height: 1.05;
+    color: #F8FAFC;
+    transition: text-shadow 0.3s ease;
+  }
+  .ss-event-venue {
+    font-family: var(--font-inter);
+    font-size: 13px;
+    color: #CBD5E1;
+    margin-top: 4px;
   }
 
   .ss-event-btn-primary {
@@ -280,11 +347,13 @@ const HOME_CSS = `
     .ss-scroll-cue { display: none; }
   }
   @media (max-width: 768px) {
-    .ss-values-grid { grid-template-columns: 1fr !important; grid-template-areas: none !important; }
-    .ss-values-grid > * { grid-area: auto !important; }
+    .ss-values-grid { grid-template-columns: 1fr !important; }
+    .ss-values-grid .ss-value-offset { margin-top: 0 !important; }
     .ss-section-pad { padding: 60px 16px !important; }
     .ss-exp-row { flex-direction: column !important; }
     .ss-exp-image-wrap { aspect-ratio: 16/9 !important; }
+    .ss-event-row { padding: 22px 12px; }
+    .ss-event-actions { width: 100%; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -472,42 +541,26 @@ export function HomePage() {
           className="ss-values-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gridTemplateRows: 'repeat(2, minmax(160px, auto))',
-            gridTemplateAreas: `"a a b b" "a a c d"`,
-            gap: '20px',
+            gridTemplateColumns: '1fr 1fr',
+            columnGap: '72px',
+            rowGap: '64px',
+            alignItems: 'start',
           }}
         >
-          {VALUE_TILES.map(({ icon: Icon, label, glow, accent, desc, area, feature }) => (
-            <div key={label} style={{ gridArea: area }}>
-              <RevealSection>
-                <div className={`ss-value-tile ${glow} ${feature ? 'ss-value-feature' : ''}`} style={{ height: '100%' }}>
-                  <Icon size={feature ? 40 : 26} color={accent} style={{ marginBottom: '16px' }} />
-                  <h3
-                    style={{
-                      fontFamily: 'var(--font-bebas)',
-                      fontSize: feature ? '34px' : '22px',
-                      color: '#F8FAFC',
-                      margin: '0 0 8px',
-                    }}
-                  >
-                    {label}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: 'var(--font-inter)',
-                      fontSize: feature ? '15px' : '13px',
-                      color: '#CBD5E1',
-                      lineHeight: 1.6,
-                      margin: 0,
-                      maxWidth: feature ? '360px' : 'none',
-                    }}
-                  >
-                    {desc}
-                  </p>
-                </div>
-              </RevealSection>
-            </div>
+          {VALUES.map(({ label, accent, desc }, i) => (
+            <RevealSection key={label} style={{ transitionDelay: `${(i % 2) * 0.12}s` }}>
+              <div
+                className={`ss-value-item ${i % 2 === 1 ? 'ss-value-offset' : ''}`}
+                style={{ '--ss-accent': accent, marginTop: i % 2 === 1 ? '56px' : 0 } as React.CSSProperties}
+              >
+                <span className="ss-value-num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className="ss-value-label">{label.toUpperCase()}</h3>
+                <div className="ss-value-line" />
+                <p className="ss-value-desc">{desc}</p>
+              </div>
+            </RevealSection>
           ))}
         </div>
       </section>
@@ -702,33 +755,34 @@ export function HomePage() {
             </div>
           </RevealSection>
 
-          <div
-            className="ss-card-stagger"
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}
-          >
-            {UPCOMING_EVENTS.map((event) => (
-              <RevealSection key={event.name}>
-                <div className="ss-event-card">
-                  <div style={{ fontFamily: 'var(--font-bebas)', fontSize: '24px', color: '#F8FAFC', marginBottom: '4px' }}>
-                    {event.name}
+          <div style={{ maxWidth: '1000px', margin: '0 auto', borderTop: '1px solid rgba(248,250,252,0.12)' }}>
+            {UPCOMING_EVENTS.map((event, i) => {
+              const [dateFirstWord, ...dateRest] = event.date.split(' ')
+              return (
+                <RevealSection key={event.name} style={{ transitionDelay: `${i * 0.08}s` }}>
+                  <div className="ss-event-row">
+                    <div className="ss-event-date">
+                      <span className="ss-event-date-label">{dateFirstWord}</span>
+                      <span className="ss-event-date-main">
+                        {dateRest.length > 0 ? dateRest.join(' ').toUpperCase() : dateFirstWord.toUpperCase()}
+                      </span>
+                    </div>
+                    <div style={{ flex: '1 1 260px' }}>
+                      <div className="ss-event-name">{event.name.toUpperCase()}</div>
+                      <div className="ss-event-venue">{event.venue}</div>
+                    </div>
+                    <div className="ss-event-actions" style={{ display: 'flex', gap: '8px' }}>
+                      <button type="button" className="ss-event-btn-primary">
+                        Get Tickets
+                      </button>
+                      <button type="button" className="ss-event-btn-secondary">
+                        FB Event
+                      </button>
+                    </div>
                   </div>
-                  <div style={{ fontFamily: 'var(--font-inter)', fontSize: '13px', color: '#00E5FF', fontWeight: 600, marginBottom: '16px' }}>
-                    {event.date}
-                  </div>
-                  <div style={{ fontFamily: 'var(--font-inter)', fontSize: '13px', color: '#CBD5E1', marginBottom: '20px' }}>
-                    {event.venue}
-                  </div>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <button type="button" className="ss-event-btn-primary">
-                      Get Tickets
-                    </button>
-                    <button type="button" className="ss-event-btn-secondary">
-                      FB Event
-                    </button>
-                  </div>
-                </div>
-              </RevealSection>
-            ))}
+                </RevealSection>
+              )
+            })}
           </div>
         </div>
       </section>
