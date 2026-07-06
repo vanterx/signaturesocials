@@ -32,6 +32,16 @@ a {
   text-decoration: none;
 }
 
+::selection {
+  background: rgba(124, 58, 237, 0.6);
+  color: #f8fafc;
+}
+
+:focus-visible {
+  outline: 2px solid #00e5ff;
+  outline-offset: 3px;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -54,6 +64,64 @@ img {
 .ss-skip-link:focus {
   left: 16px;
   top: 16px;
+}
+
+/* ─── Shared typographic + UI primitives ─── */
+.ss-eyebrow {
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #7c3aed;
+}
+
+.ss-gradient-text {
+  background: linear-gradient(100deg, #7c3aed 0%, #00e5ff 55%, #ff2d95 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ss-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #00e5ff;
+  color: #0a0a0a;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  border-radius: 4px;
+  transition: all 0.25s ease;
+}
+.ss-cta-btn:hover {
+  box-shadow: 0 0 32px rgba(0, 229, 255, 0.55);
+  transform: translateY(-2px);
+}
+
+.ss-pill {
+  display: inline-block;
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #f8fafc;
+  background: rgba(124, 58, 237, 0.12);
+  border: 1px solid rgba(124, 58, 237, 0.45);
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin: 4px 8px 0 0;
+  transition: all 0.3s ease;
+}
+.ss-pill:hover {
+  background: rgba(124, 58, 237, 0.35);
+  border-color: rgba(0, 229, 255, 0.6);
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.3);
+  transform: translateY(-2px);
 }
 
 .ss-reveal {

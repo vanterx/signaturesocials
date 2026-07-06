@@ -36,11 +36,11 @@ function generateParticles(count: number, topRange: [number, number]): Particle[
 // mount rather than during render to avoid a server/client hydration mismatch.
 export function ParticleField({ count, topRange = [40, 90] }: ParticleFieldProps) {
   const [particles, setParticles] = useState<Particle[] | null>(null)
+  const [topMin, topMax] = topRange
 
   useEffect(() => {
-    setParticles(generateParticles(count, topRange))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count])
+    setParticles(generateParticles(count, [topMin, topMax]))
+  }, [count, topMin, topMax])
 
   if (!particles) return null
 

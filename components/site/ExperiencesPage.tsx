@@ -8,13 +8,6 @@ import { RevealSection } from '@/components/site/RevealSection'
 import { experiences } from '@/lib/experiences-data'
 
 const EXPERIENCES_CSS = `
-  @keyframes ss-float-shape {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    50%      { transform: translateY(-24px) translateX(12px); }
-  }
-
-  .ss-float-shape { animation: ss-float-shape 20s ease-in-out infinite; }
-
   .ss-exp-card {
     transition: transform 0.3s ease;
   }
@@ -22,24 +15,15 @@ const EXPERIENCES_CSS = `
   .ss-exp-card:hover .ss-exp-image-overlay { opacity: 0.55; }
   .ss-exp-card:hover .ss-exp-name { text-shadow: 0 0 24px rgba(124,58,237,0.6); }
 
+  .ss-exp-image-wrap img { transition: transform 0.6s ease; }
+  .ss-exp-card:hover .ss-exp-image-wrap img { transform: scale(1.05); }
+
   .ss-exp-image-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg, rgba(124,58,237,0.35), rgba(255,45,149,0.2), rgba(0,229,255,0.25));
     opacity: 0.25;
     transition: opacity 0.3s ease;
-  }
-
-  .ss-vibe-pill {
-    display: inline-block;
-    font-family: var(--font-inter);
-    font-size: 12px;
-    font-weight: 600;
-    color: #F8FAFC;
-    border: 1px solid rgba(124,58,237,0.5);
-    padding: 5px 14px;
-    border-radius: 999px;
-    margin: 4px 8px 0 0;
   }
 
   .ss-exp-ghost-number {
@@ -65,26 +49,6 @@ const EXPERIENCES_CSS = `
     margin-bottom: -8px;
   }
 
-  .ss-cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #00E5FF;
-    color: #0A0A0A;
-    font-family: var(--font-inter);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 16px 36px;
-    border-radius: 4px;
-    transition: all 0.25s ease;
-  }
-  .ss-cta-btn:hover {
-    box-shadow: 0 0 32px rgba(0,229,255,0.55);
-    transform: translateY(-2px);
-  }
-
   @media (max-width: 768px) {
     .ss-exp-row { flex-direction: column !important; }
     .ss-exp-image-wrap { aspect-ratio: 16/9 !important; }
@@ -93,7 +57,7 @@ const EXPERIENCES_CSS = `
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ss-float-shape { animation: none !important; }
+    .ss-exp-image-wrap img { transition: none !important; }
   }
 `
 
@@ -127,18 +91,7 @@ export function ExperiencesPage() {
         <span className="ss-exp-ghost-number">{String(experiences.length).padStart(2, '0')}</span>
 
         <div className="ss-hero-title-lg" style={{ position: 'relative', zIndex: 1, maxWidth: '760px' }}>
-          <span
-            style={{
-              fontFamily: 'var(--font-inter)',
-              fontSize: '12px',
-              fontWeight: 600,
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#7C3AED',
-            }}
-          >
-            {experiences.length} Signature Experiences
-          </span>
+          <span className="ss-eyebrow">{experiences.length} Signature Experiences</span>
           <h1
             style={{
               fontFamily: 'var(--font-bebas)',
@@ -150,7 +103,7 @@ export function ExperiencesPage() {
           >
             EVERY EVENT
             <br />
-            HAS A PULSE
+            HAS A <span className="ss-gradient-text">PULSE</span>
           </h1>
           <p
             style={{
@@ -251,7 +204,7 @@ export function ExperiencesPage() {
                   </p>
                   <div>
                     {experience.vibe.split(' · ').map((tag) => (
-                      <span key={tag} className="ss-vibe-pill">
+                      <span key={tag} className="ss-pill">
                         {tag}
                       </span>
                     ))}

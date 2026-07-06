@@ -63,18 +63,7 @@ export function AboutPage() {
             }}
           />
           <div>
-            <span
-              style={{
-                fontFamily: 'var(--font-inter)',
-                fontSize: '12px',
-                fontWeight: 600,
-                letterSpacing: '0.3em',
-                textTransform: 'uppercase',
-                color: '#7C3AED',
-              }}
-            >
-              Our Story
-            </span>
+            <span className="ss-eyebrow">Our Story</span>
             <h1
               style={{
                 fontFamily: 'var(--font-bebas)',
@@ -86,7 +75,7 @@ export function AboutPage() {
             >
               CREATED BY PASSION.
               <br />
-              DRIVEN BY COMMUNITY.
+              DRIVEN BY <span className="ss-gradient-text">COMMUNITY.</span>
             </h1>
             <p
               style={{

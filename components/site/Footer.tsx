@@ -2,36 +2,7 @@
 
 import Link from 'next/link'
 import { SITE_NAME, SITE_TAGLINE, LEGAL_ENTITY, COPYRIGHT_YEAR, NAV_LINKS, SOCIAL_LINKS } from '@/lib/constants'
-
-function InstagramIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="2" y="2" width="20" height="20" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-    </svg>
-  )
-}
-
-function FacebookIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-    </svg>
-  )
-}
-
-function MixcloudIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z" />
-      <path d="M8 10v4" />
-      <path d="M10 11v2" />
-      <path d="M14 11v2" />
-      <path d="M16 10v4" />
-    </svg>
-  )
-}
+import { SOCIAL_ICON_LINKS } from '@/components/site/SocialIcons'
 
 const FOOTER_CSS = `
   .ss-footer-link {
@@ -60,6 +31,41 @@ const FOOTER_CSS = `
     transform: translateY(-2px) scale(1.05);
   }
 
+  .ss-newsletter-input {
+    background: #1A1A1A;
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-family: var(--font-inter);
+    font-size: 13px;
+    color: #F8FAFC;
+    outline: none;
+    width: 180px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .ss-newsletter-input:focus {
+    border-color: #7C3AED;
+    box-shadow: 0 0 12px rgba(124,58,237,0.25);
+  }
+  .ss-newsletter-input::placeholder { color: rgba(203,213,225,0.5); }
+
+  .ss-newsletter-btn {
+    background: #7C3AED;
+    color: #F8FAFC;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 18px;
+    font-family: var(--font-inter);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .ss-newsletter-btn:hover {
+    background: #9D5CFF;
+    box-shadow: 0 0 16px rgba(124,58,237,0.5);
+  }
+
   @media (max-width: 768px) {
     .ss-footer-row { flex-direction: column !important; text-align: center; gap: 32px !important; }
     .ss-footer-nav { align-items: center !important; }
@@ -68,8 +74,15 @@ const FOOTER_CSS = `
 
 export function Footer() {
   return (
-    <footer style={{ background: '#0A0A0A', borderTop: '1px solid rgba(124,58,237,0.15)' }}>
+    <footer style={{ background: '#0A0A0A' }}>
       <style dangerouslySetInnerHTML={{ __html: FOOTER_CSS }} />
+      <div
+        style={{
+          height: '1px',
+          background:
+            'linear-gradient(90deg, transparent 0%, rgba(124,58,237,0.5) 30%, rgba(0,229,255,0.4) 70%, transparent 100%)',
+        }}
+      />
       <div
         className="ss-footer-row"
         style={{
@@ -136,76 +149,28 @@ export function Footer() {
                 type="email"
                 placeholder="Your email"
                 required
-                style={{
-                  background: '#1A1A1A',
-                  border: '1px solid rgba(124,58,237,0.3)',
-                  borderRadius: '4px',
-                  padding: '10px 14px',
-                  fontFamily: 'var(--font-inter)',
-                  fontSize: '13px',
-                  color: '#F8FAFC',
-                  outline: 'none',
-                  width: '180px',
-                }}
-                onFocus={(e) => (e.target.style.borderColor = '#7C3AED')}
-                onBlur={(e) => (e.target.style.borderColor = 'rgba(124,58,237,0.3)')}
+                aria-label="Email address"
+                className="ss-newsletter-input"
               />
-              <button
-                type="submit"
-                style={{
-                  background: '#7C3AED',
-                  color: '#F8FAFC',
-                  border: 'none',
-                  borderRadius: '4px',
-                  padding: '10px 18px',
-                  fontFamily: 'var(--font-inter)',
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#9D5CFF'
-                  e.currentTarget.style.boxShadow = '0 0 16px rgba(124,58,237,0.5)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = '#7C3AED'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              >
+              <button type="submit" className="ss-newsletter-btn">
                 Join
               </button>
             </form>
           </div>
 
           <div style={{ display: 'flex', gap: '12px' }}>
-            <a
-              href={SOCIAL_LINKS.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ss-social-icon"
-              aria-label="Instagram"
-            >
-              <InstagramIcon />
-            </a>
-            <a
-              href={SOCIAL_LINKS.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ss-social-icon"
-              aria-label="Facebook"
-            >
-              <FacebookIcon />
-            </a>
-            <a
-              href={SOCIAL_LINKS.mixcloud}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ss-social-icon"
-              aria-label="Mixcloud"
-            >
-              <MixcloudIcon />
-            </a>
+            {SOCIAL_ICON_LINKS.map(({ key, label, Icon }) => (
+              <a
+                key={key}
+                href={SOCIAL_LINKS[key]}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ss-social-icon"
+                aria-label={label}
+              >
+                <Icon />
+              </a>
+            ))}
           </div>
         </div>
       </div>

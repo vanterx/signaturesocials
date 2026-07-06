@@ -22,12 +22,17 @@ const HOME_CSS = `
     50%      { opacity: 0.9; }
   }
 
+  @keyframes ss-panel-in {
+    from { opacity: 0; transform: rotate(-2deg) translateY(24px); }
+    to   { opacity: 1; transform: rotate(-2deg) translateY(0); }
+  }
+
   .ss-hero-eyebrow { animation: ss-fade-in-up 0.8s ease 0.1s both; }
   .ss-hero-title   { animation: ss-fade-in-up 0.8s ease 0.3s both, ss-pulse-glow 4s ease-in-out infinite 1.1s; }
   .ss-hero-tagline { animation: ss-fade-in-up 0.8s ease 0.5s both; }
   .ss-hero-quote   { animation: ss-fade-in-up 0.8s ease 0.7s both; }
   .ss-hero-cta     { animation: ss-fade-in-up 0.8s ease 0.9s both; }
-  .ss-hero-panel   { animation: ss-fade-in-up 1s ease 0.4s both; }
+  .ss-hero-panel   { animation: ss-panel-in 1s ease 0.4s both; }
 
   .ss-hero-glow {
     position: absolute;
@@ -60,6 +65,12 @@ const HOME_CSS = `
     transform: rotate(-2deg);
     border: 1px solid rgba(124,58,237,0.45);
     box-shadow: 0 24px 64px rgba(124,58,237,0.25), 0 0 0 8px rgba(10,10,10,1);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  .ss-hero-panel:hover {
+    animation: none;
+    transform: rotate(0deg);
+    box-shadow: 0 24px 72px rgba(124,58,237,0.4), 0 0 0 8px rgba(10,10,10,1);
   }
   .ss-hero-panel-frame {
     position: absolute;
@@ -67,8 +78,10 @@ const HOME_CSS = `
     border: 1px solid rgba(0,229,255,0.25);
     border-radius: 6px;
     transform: rotate(2deg);
+    transition: transform 0.5s ease;
     pointer-events: none;
   }
+  .ss-hero-panel:hover .ss-hero-panel-frame { transform: rotate(0deg); }
 
   .ss-scroll-cue {
     position: absolute;
@@ -96,33 +109,27 @@ const HOME_CSS = `
     color: #CBD5E1;
   }
 
-  .ss-cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #00E5FF;
-    color: #0A0A0A;
-    font-family: var(--font-inter);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 16px 36px;
-    border-radius: 4px;
-    transition: all 0.25s ease;
-  }
-  .ss-cta-btn:hover {
-    box-shadow: 0 0 32px rgba(0,229,255,0.55);
-    transform: translateY(-2px);
-  }
-
   .ss-event-card {
+    position: relative;
+    overflow: hidden;
     background: #0A0A0A;
     border-radius: 12px;
     border: 1px solid rgba(124,58,237,0.25);
     padding: 32px;
     transition: all 0.3s ease;
   }
+  .ss-event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #7C3AED, #00E5FF, #FF2D95);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+  }
+  .ss-event-card:hover::before { opacity: 1; }
   .ss-event-card:hover {
     border-color: rgba(124,58,237,0.7);
     box-shadow: 0 12px 32px rgba(124,58,237,0.2);
@@ -131,6 +138,8 @@ const HOME_CSS = `
 
   .ss-event-btn-primary {
     display: inline-block;
+    border: none;
+    cursor: pointer;
     font-family: var(--font-inter);
     font-size: 12px;
     font-weight: 600;
@@ -138,7 +147,6 @@ const HOME_CSS = `
     background: #7C3AED;
     padding: 8px 16px;
     border-radius: 4px;
-    cursor: pointer;
     transition: all 0.2s ease;
   }
   .ss-event-btn-primary:hover {
@@ -148,6 +156,8 @@ const HOME_CSS = `
 
   .ss-event-btn-secondary {
     display: inline-block;
+    background: none;
+    cursor: pointer;
     font-family: var(--font-inter);
     font-size: 12px;
     font-weight: 600;
@@ -155,7 +165,6 @@ const HOME_CSS = `
     border: 1px solid rgba(124,58,237,0.5);
     padding: 8px 16px;
     border-radius: 4px;
-    cursor: pointer;
     transition: all 0.2s ease;
   }
   .ss-event-btn-secondary:hover {
@@ -179,27 +188,6 @@ const HOME_CSS = `
   .ss-value-tile.ss-glow-magenta:hover { border-color: rgba(255,45,149,0.6); box-shadow: 0 12px 32px rgba(255,45,149,0.2); }
   .ss-value-feature {
     background: linear-gradient(155deg, rgba(124,58,237,0.18), rgba(10,10,10,0.4));
-  }
-
-  .ss-genre-pill {
-    display: inline-block;
-    font-family: var(--font-inter);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: #F8FAFC;
-    background: rgba(124,58,237,0.15);
-    border: 1px solid rgba(124,58,237,0.4);
-    padding: 4px 12px;
-    border-radius: 999px;
-    margin: 4px 6px 0 0;
-    transition: all 0.3s ease;
-  }
-  .ss-genre-pill:hover {
-    background: rgba(124,58,237,0.35);
-    border-color: rgba(0,229,255,0.6);
-    box-shadow: 0 0 16px rgba(124,58,237,0.3);
-    transform: translateY(-2px);
   }
 
   @keyframes ss-pill-pop {
@@ -244,6 +232,7 @@ const VALUE_TILES = [
     icon: Music,
     label: 'The Music',
     glow: 'ss-glow-purple',
+    accent: '#7C3AED',
     desc: 'Curated sets from underground selectors and international headliners.',
     area: 'a',
     feature: true,
@@ -252,6 +241,7 @@ const VALUE_TILES = [
     icon: Zap,
     label: 'The Energy',
     glow: 'ss-glow-cyan',
+    accent: '#00E5FF',
     desc: 'A dancefloor charged from the first drop to the last encore.',
     area: 'b',
     feature: false,
@@ -260,6 +250,7 @@ const VALUE_TILES = [
     icon: Sparkles,
     label: 'The Production',
     glow: 'ss-glow-magenta',
+    accent: '#FF2D95',
     desc: 'Immersive lighting, sound and staging built for the moment.',
     area: 'c',
     feature: false,
@@ -268,6 +259,7 @@ const VALUE_TILES = [
     icon: Users,
     label: 'The People',
     glow: 'ss-glow-purple',
+    accent: '#7C3AED',
     desc: 'A community that shows up for each other, every single time.',
     area: 'd',
     feature: false,
@@ -348,7 +340,7 @@ export function HomePage() {
             >
               SIGNATURE
               <br />
-              SOCIALS
+              <span className="ss-gradient-text">SOCIALS</span>
             </h1>
 
             <p
@@ -454,11 +446,11 @@ export function HomePage() {
             gap: '20px',
           }}
         >
-          {VALUE_TILES.map(({ icon: Icon, label, glow, desc, area, feature }) => (
+          {VALUE_TILES.map(({ icon: Icon, label, glow, accent, desc, area, feature }) => (
             <div key={label} style={{ gridArea: area }}>
               <RevealSection>
                 <div className={`ss-value-tile ${glow} ${feature ? 'ss-value-feature' : ''}`} style={{ height: '100%' }}>
-                  <Icon size={feature ? 40 : 26} color="#F8FAFC" style={{ marginBottom: '16px' }} />
+                  <Icon size={feature ? 40 : 26} color={accent} style={{ marginBottom: '16px' }} />
                   <h3
                     style={{
                       fontFamily: 'var(--font-bebas)',
@@ -507,21 +499,10 @@ export function HomePage() {
 
         <RevealSection>
           <div style={{ marginTop: '40px', display: 'flex', alignItems: 'baseline', gap: '20px', flexWrap: 'wrap' }}>
-            <span
-              style={{
-                fontFamily: 'var(--font-inter)',
-                fontSize: '12px',
-                fontWeight: 600,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: '#7C3AED',
-              }}
-            >
-              The Sound
-            </span>
+            <span className="ss-eyebrow">The Sound</span>
             <div className="ss-genre-pill-container">
               {['House', 'Techno', 'Trance', 'Progressive', 'Psytrance'].map((genre) => (
-                <span key={genre} className="ss-genre-pill">
+                <span key={genre} className="ss-pill">
                   {genre}
                 </span>
               ))}
@@ -535,18 +516,7 @@ export function HomePage() {
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <RevealSection>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-inter)',
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  letterSpacing: '0.25em',
-                  textTransform: 'uppercase',
-                  color: '#7C3AED',
-                }}
-              >
-                Don&apos;t Miss
-              </span>
+              <span className="ss-eyebrow">Don&apos;t Miss</span>
               <h2
                 style={{
                   fontFamily: 'var(--font-bebas)',
@@ -577,8 +547,12 @@ export function HomePage() {
                     {event.venue}
                   </div>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <span className="ss-event-btn-primary">Get Tickets</span>
-                    <span className="ss-event-btn-secondary">FB Event</span>
+                    <button type="button" className="ss-event-btn-primary">
+                      Get Tickets
+                    </button>
+                    <button type="button" className="ss-event-btn-secondary">
+                      FB Event
+                    </button>
                   </div>
                 </div>
               </RevealSection>

@@ -3,10 +3,9 @@ interface SectionHeadingProps {
   title: string
   subtitle?: string
   align?: 'left' | 'center'
-  light?: boolean
 }
 
-export function SectionHeading({ label, title, subtitle, align = 'left', light = false }: SectionHeadingProps) {
+export function SectionHeading({ label, title, subtitle, align = 'left' }: SectionHeadingProps) {
   const isCentered = align === 'center'
 
   return (
@@ -40,7 +39,7 @@ export function SectionHeading({ label, title, subtitle, align = 'left', light =
           fontSize: 'clamp(2.25rem, 4vw + 1rem, 3.75rem)',
           lineHeight: 1.05,
           letterSpacing: '0.02em',
-          color: light ? '#F8FAFC' : '#F8FAFC',
+          color: '#F8FAFC',
           margin: 0,
         }}
       >
