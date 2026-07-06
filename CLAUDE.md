@@ -31,4 +31,4 @@ This is mostly a **single-page** Next.js 14 App Router site — the primary cont
 
 ## Git workflow
 
-Work happens on feature branches, not directly on `master`/`main`. Remote is `https://github.com/vanterx/signaturesocials.git`. `master` currently only holds the bare `create-next-app` scaffold commit — all real site work lives on `feature/initial-site-build`, which is well ahead of `master` and not yet merged. Open a PR from `feature/initial-site-build` into `master` when ready to consolidate history.
+Remote is `https://github.com/vanterx/signaturesocials.git`. `master` holds the full, consolidated site build (the initial `feature/initial-site-build` branch was squash-merged via PR and deleted). Work happens on new feature branches off `master`, not directly on `master` — open a PR back into `master` when a feature branch is ready to merge.
