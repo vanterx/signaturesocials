@@ -15,6 +15,7 @@ export const experiences: Experience[] = [
     description:
       'Step into an immersive world where music, visual art and imagination collide. Expect hypnotic production, unforgettable performances and a dancefloor unlike any other.',
     vibe: 'Immersive · Hypnotic · Otherworldly',
+    image: '/images/experiences/spellbound.png',
   },
   {
     id: 'anti-social',
@@ -23,6 +24,7 @@ export const experiences: Experience[] = [
     description:
       'A celebration of darker electronic music, intimate venues and late-night energy.',
     vibe: 'Dark · Underground · Raw',
+    image: '/images/experiences/anti-social.png',
   },
   {
     id: 'bass-ritual',
@@ -31,6 +33,7 @@ export const experiences: Experience[] = [
     description:
       'Rolling basslines. Driving rhythms. Deep underground culture. A gathering for those who believe the best music is felt, not just heard.',
     vibe: 'Deep · Driving · Heavy',
+    image: '/images/experiences/bass-ritual.png',
   },
   {
     id: 'back-in-the-day',
@@ -39,5 +42,6 @@ export const experiences: Experience[] = [
     description:
       'A celebration of timeless dance music that still fills dancefloors today.',
     vibe: 'Nostalgic · Timeless · Euphoric',
+    image: '/images/experiences/back-in-the-day.png',
   },
 ]
