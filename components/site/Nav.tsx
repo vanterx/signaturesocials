@@ -181,13 +181,12 @@ export function Nav() {
         >
           <Link href="/" aria-label={`${SITE_NAME} — home`} style={{ display: 'flex', alignItems: 'center', lineHeight: 0 }}>
             <Image
-              src="/ss-monogram.svg"
+              src="/images/brand/logo-white.png"
               alt={SITE_NAME}
-              width={44}
-              height={44}
+              width={209}
+              height={112}
               priority
-              unoptimized
-              style={{ display: 'block' }}
+              style={{ display: 'block', width: 'auto', height: '38px' }}
             />
           </Link>
 

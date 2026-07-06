@@ -97,12 +97,11 @@ export function Footer() {
       >
         <div style={{ maxWidth: '320px' }}>
           <Image
-            src="/ss-monogram.svg"
+            src="/images/brand/logo-white.png"
             alt={SITE_NAME}
-            width={56}
-            height={56}
-            unoptimized
-            style={{ display: 'block', marginBottom: '12px' }}
+            width={209}
+            height={112}
+            style={{ display: 'block', width: 'auto', height: '52px', marginBottom: '16px' }}
           />
           <p style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: '#CBD5E1', lineHeight: 1.6 }}>
             {SITE_TAGLINE}
