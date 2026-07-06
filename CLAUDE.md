@@ -31,4 +31,4 @@ This is mostly a **single-page** Next.js 14 App Router site — the primary cont
 
 ## Git workflow
 
-Remote is `https://github.com/vanterx/signaturesocials.git`. `master` holds the full, consolidated site build (the initial `feature/initial-site-build` branch was squash-merged via PR and deleted). Work happens on new feature branches off `master`, not directly on `master` — open a PR back into `master` when a feature branch is ready to merge.
+Remote is `https://github.com/vanterx/signaturesocials.git`. Work happens on feature branches off `master`, not directly on `master` — open a PR back into `master` when a feature branch is ready to merge.

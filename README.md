@@ -34,7 +34,3 @@ There is no test suite in this repo.
 ## Structure
 
 Mostly a single-page site: primary content lives on `/`, with anchored sections at `/#experiences` and `/#about`, plus a standalone `/events` page for SEO. See [CLAUDE.md](CLAUDE.md) for the full architecture breakdown, styling conventions, and data file locations.
-
-## Branches
-
-Real site work lives on `feature/initial-site-build` — `master` currently only holds the bare scaffold commit. Open a PR from `feature/initial-site-build` into `master` when ready to consolidate.
