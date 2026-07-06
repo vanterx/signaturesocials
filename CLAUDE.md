@@ -31,7 +31,7 @@ This is mostly a **single-page** Next.js 14 App Router site — the primary cont
 
 ## Reference material
 
-The original implementation brief (written for a Hermes hand-off) lives at `docs/2026-07-06_signature-socials-website.md`. It describes gradient-placeholder imagery; that approach was superseded once real Midjourney photography was generated and dropped into `public/images/` — treat the code as the source of truth over that doc.
+The original implementation brief (written for a Hermes hand-off) lives at `docs/2026-07-06_signature-socials-website.md`. It describes gradient-placeholder imagery; that approach was superseded once real Midjourney photography was generated and dropped into `public/images/` — treat the code as the source of truth over that doc. `docs/` (this brief, `PROMPT_ELECTRIFY.md`, raw Midjourney generations) is gitignored — it's local reference material only, not part of the repo.
 
 ## Git workflow
 
