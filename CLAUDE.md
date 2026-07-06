@@ -35,4 +35,4 @@ The original implementation brief (written for a Hermes hand-off) lives at `docs
 
 ## Git workflow
 
-Work happens on feature branches, not directly on `master`/`main`. This repo has no remote configured yet, so branches are local-only for now — push and PR workflow applies once a remote is added.
+Work happens on feature branches, not directly on `master`/`main`. Remote is `https://github.com/vanterx/signaturesocials.git`. `master` currently only holds the bare `create-next-app` scaffold commit — all real site work lives on `feature/initial-site-build`, which is well ahead of `master` and not yet merged. Open a PR from `feature/initial-site-build` into `master` when ready to consolidate history.
