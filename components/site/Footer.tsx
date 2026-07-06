@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { SITE_NAME, SITE_TAGLINE, LEGAL_ENTITY, COPYRIGHT_YEAR, NAV_LINKS, SOCIAL_LINKS } from '@/lib/constants'
 import { SOCIAL_ICON_LINKS } from '@/components/site/SocialIcons'
@@ -95,17 +96,13 @@ export function Footer() {
         }}
       >
         <div style={{ maxWidth: '320px' }}>
-          <div
-            style={{
-              fontFamily: 'var(--font-bebas)',
-              fontSize: '28px',
-              letterSpacing: '0.06em',
-              color: '#F8FAFC',
-              marginBottom: '12px',
-            }}
-          >
-            {SITE_NAME.toUpperCase()}
-          </div>
+          <Image
+            src="/images/brand/logo-white.png"
+            alt={SITE_NAME}
+            width={112}
+            height={60}
+            style={{ width: 'auto', height: '56px', marginBottom: '16px' }}
+          />
           <p style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: '#CBD5E1', lineHeight: 1.6 }}>
             {SITE_TAGLINE}
           </p>

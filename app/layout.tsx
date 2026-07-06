@@ -8,6 +8,7 @@ import { PageTransition } from '@/components/site/PageTransition'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://signaturesocials.nz'),
   title: `${SITE_NAME} | New Zealand's Electronic Nightlife Collective`,
   description: SITE_DESCRIPTION,
   openGraph: {
@@ -15,11 +16,13 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     type: 'website',
     url: 'https://signaturesocials.nz',
+    images: [{ url: '/images/brand/og-image.png', width: 1200, height: 630, alt: SITE_NAME }],
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    images: ['/images/brand/og-image.png'],
   },
 }
 
@@ -39,7 +42,7 @@ export default function RootLayout({
     name: SITE_NAME,
     description: SITE_DESCRIPTION,
     url: 'https://signaturesocials.nz',
-    logo: 'https://signaturesocials.nz/icon?og',
+    logo: 'https://signaturesocials.nz/images/brand/logo-white.png',
     sameAs: [
       'https://instagram.com/signaturesocials',
       'https://facebook.com/signaturesocials',
