@@ -28,7 +28,7 @@ There is no test suite in this repo.
 
 - **Next.js 14** (App Router, TypeScript)
 - **Inline styles + injected `<style>` blocks** for CSS — no Tailwind
-- **Bebas Neue** (headings) + **Inter** (body) via `next/font/google`
+- **Oswald Light** (display/headings, matching the logo wordmark) + **Inter** (body) via `next/font/google`
 - Self-hosted images (`public/images/`), AI-generated (Midjourney) placeholders for real event photography
 
 ## Structure

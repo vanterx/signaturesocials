@@ -150,7 +150,8 @@ const HOME_CSS = `
   }
   .ss-ticker:hover .ss-ticker-track { animation-play-state: paused; }
   .ss-ticker-item {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);
     letter-spacing: 0.06em;
     padding: 0 28px;
@@ -172,7 +173,8 @@ const HOME_CSS = `
     position: absolute;
     top: -12px;
     left: -6px;
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(4.5rem, 4vw + 3rem, 7rem);
     line-height: 1;
     color: transparent;
@@ -186,7 +188,7 @@ const HOME_CSS = `
   .ss-value-label {
     position: relative;
     z-index: 1;
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
     font-size: clamp(2rem, 1.5vw + 1.5rem, 2.75rem);
     color: #F8FAFC;
     margin: 0 0 12px;
@@ -232,7 +234,8 @@ const HOME_CSS = `
   }
 
   .ss-exp-index {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(3rem, 4vw + 1rem, 5rem);
     color: rgba(124,58,237,0.35);
     line-height: 1;
@@ -282,14 +285,16 @@ const HOME_CSS = `
     margin-bottom: 4px;
   }
   .ss-event-date-main {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(1.6rem, 1vw + 1.25rem, 2.2rem);
     line-height: 1;
     color: transparent;
     -webkit-text-stroke: 1px rgba(248,250,252,0.5);
   }
   .ss-event-name {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(1.6rem, 1.5vw + 1rem, 2.4rem);
     line-height: 1.05;
     color: #F8FAFC;
@@ -457,7 +462,7 @@ export function HomePage() {
             <h1
               className="ss-hero-title"
               style={{
-                fontFamily: 'var(--font-bebas)',
+                fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(3.5rem, 4vw + 3rem, 8.5rem)',
                 lineHeight: 0.88,
                 letterSpacing: '0.01em',
@@ -546,7 +551,7 @@ export function HomePage() {
         <RevealSection>
           <h2
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
               color: '#F8FAFC',
               marginBottom: '20px',
@@ -615,7 +620,7 @@ export function HomePage() {
           <span className="ss-eyebrow">{experiences.length} Signature Experiences</span>
           <h2
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2.5rem, 4vw + 1rem, 4.5rem)',
               color: '#F8FAFC',
               margin: '12px 0 16px',
@@ -682,7 +687,7 @@ export function HomePage() {
                     <h3
                       className="ss-exp-name"
                       style={{
-                        fontFamily: 'var(--font-bebas)',
+                        fontFamily: 'var(--font-display)',
                         fontSize: 'clamp(2.5rem, 4vw + 1rem, 4rem)',
                         color: '#F8FAFC',
                         margin: 0,
@@ -739,7 +744,7 @@ export function HomePage() {
         <RevealSection>
           <h2
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
               color: '#F8FAFC',
               marginBottom: '32px',
@@ -779,7 +784,7 @@ export function HomePage() {
               <span className="ss-eyebrow">Don&apos;t Miss</span>
               <h2
                 style={{
-                  fontFamily: 'var(--font-bebas)',
+                  fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
                   color: '#F8FAFC',
                   margin: '12px 0 0',
@@ -837,7 +842,9 @@ export function HomePage() {
         />
         <p
           style={{
-            fontFamily: 'var(--font-bebas)',
+            fontFamily: 'var(--font-display)',
+            fontWeight: 300,
+            textTransform: 'uppercase',
             fontSize: '22px',
             letterSpacing: '0.08em',
             color: '#CBD5E1',

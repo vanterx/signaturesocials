@@ -48,14 +48,17 @@ const INDEX_LIST_CSS = `
   .ss-index-row:hover .ss-index-arrow { opacity: 1; transform: translateX(0); }
 
   .ss-index-number {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(1.5rem, 1vw + 1.25rem, 2rem);
     color: rgba(248,250,252,0.3);
     min-width: 48px;
     transition: color 0.3s ease;
   }
   .ss-index-label {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
+    text-transform: uppercase;
     font-size: clamp(1.5rem, 1.5vw + 1rem, 2.25rem);
     letter-spacing: 0.01em;
     color: #F8FAFC;

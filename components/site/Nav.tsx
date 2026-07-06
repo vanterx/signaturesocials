@@ -87,7 +87,8 @@ const NAV_CSS = `
   }
 
   .ss-mobile-link {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: 42px;
     letter-spacing: 0.05em;
     color: #F8FAFC;

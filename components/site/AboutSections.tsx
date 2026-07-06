@@ -96,7 +96,9 @@ export function AboutSections() {
           <p
             className="ss-pulse-glow"
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
+              fontWeight: 300,
+              textTransform: 'uppercase',
               fontSize: 'clamp(2rem, 3.5vw + 1rem, 3.25rem)',
               color: '#F8FAFC',
               fontStyle: 'italic',
@@ -167,7 +169,7 @@ export function AboutSections() {
           <h2
             className="ss-pulse-glow"
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2.5rem, 4vw + 1rem, 4.5rem)',
               color: '#F8FAFC',
               margin: '0 0 24px',
@@ -189,7 +191,9 @@ export function AboutSections() {
           </p>
           <p
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
+              fontWeight: 300,
+              textTransform: 'uppercase',
               fontSize: 'clamp(1.5rem, 2.5vw + 1rem, 2.25rem)',
               color: '#F8FAFC',
               maxWidth: '760px',
