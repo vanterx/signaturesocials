@@ -44,7 +44,7 @@ export const REASONS = [
 ]
 
 export const UPCOMING_EVENTS = [
-  { name: 'Spellbound Vol. 2', date: 'Coming Soon', venue: 'TBC, Auckland' },
-  { name: 'Anti Social — Winter Edition', date: 'Coming Soon', venue: 'TBC, Wellington' },
-  { name: 'Bass Ritual: Chapter One', date: 'Coming Soon', venue: 'TBC, Christchurch' },
+  { name: 'Spellbound Vol. 2', date: 'Coming Soon', venue: 'TBC, Auckland', schemaDate: '2026-09-15' },
+  { name: 'Anti Social — Winter Edition', date: 'Coming Soon', venue: 'TBC, Wellington', schemaDate: '2026-08-22' },
+  { name: 'Bass Ritual: Chapter One', date: 'Coming Soon', venue: 'TBC, Christchurch', schemaDate: '2026-10-10' },
 ]

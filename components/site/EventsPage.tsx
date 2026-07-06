@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { RevealSection } from '@/components/site/RevealSection'
+import { UPCOMING_EVENTS } from '@/lib/home-data'
 
 const EVENTS_CSS = `
   .ss-event-list-row {
@@ -111,18 +112,12 @@ const EVENTS_CSS = `
   }
 `
 
-const UPCOMING_EVENTS = [
-  { name: 'Spellbound Vol. 2', date: 'COMING SOON', venue: 'TBC, Auckland', schema_date: '2026-09-15' },
-  { name: 'Anti Social — Winter Edition', date: 'COMING SOON', venue: 'TBC, Wellington', schema_date: '2026-08-22' },
-  { name: 'Bass Ritual: Chapter One', date: 'COMING SOON', venue: 'TBC, Christchurch', schema_date: '2026-10-10' },
-]
-
 export function EventsPage() {
   const eventSchemas = UPCOMING_EVENTS.map((event) => ({
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: event.name,
-    startDate: `${event.schema_date}T20:00:00Z`,
+    startDate: `${event.schemaDate}T20:00:00Z`,
     url: `https://signaturesocials.nz/events#${event.name.toLowerCase().replace(/ /g, '-')}`,
     location: {
       '@type': 'Place',
@@ -205,11 +200,15 @@ export function EventsPage() {
       <section style={{ maxWidth: '1000px', margin: '0 auto', padding: '80px 24px' }}>
         <RevealSection>
           <div style={{ borderTop: '1px solid rgba(248,250,252,0.12)' }}>
-            {UPCOMING_EVENTS.map((event) => (
+            {UPCOMING_EVENTS.map((event) => {
+              const [dateFirstWord, ...dateRest] = event.date.split(' ')
+              return (
               <div key={event.name} className="ss-event-list-row">
                 <div className="ss-event-date-block">
-                  <span className="ss-event-date-label">Coming</span>
-                  <span className="ss-event-date-text">SOON</span>
+                  <span className="ss-event-date-label">{dateFirstWord}</span>
+                  <span className="ss-event-date-text">
+                    {dateRest.length > 0 ? dateRest.join(' ').toUpperCase() : dateFirstWord.toUpperCase()}
+                  </span>
                 </div>
 
                 <div className="ss-event-info">
@@ -226,7 +225,8 @@ export function EventsPage() {
                   </button>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
         </RevealSection>
       </section>
