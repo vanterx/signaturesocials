@@ -1,10 +1,6 @@
-import type { Metadata } from 'next'
-import { ExperiencesPage } from '@/components/site/ExperiencesPage'
+import { redirect } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'Experiences | Signature Socials',
-}
-
+// Experiences content now lives on the home page; keep old links working.
 export default function Experiences() {
-  return <ExperiencesPage />
+  redirect('/#experiences')
 }

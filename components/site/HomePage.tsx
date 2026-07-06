@@ -6,6 +6,7 @@ import { Music, Zap, Sparkles, Users } from 'lucide-react'
 import { ParticleField } from '@/components/site/ParticleField'
 import { IndexList } from '@/components/site/IndexList'
 import { RevealSection } from '@/components/site/RevealSection'
+import { experiences } from '@/lib/experiences-data'
 
 const HOME_CSS = `
   @keyframes ss-fade-in-up {
@@ -21,10 +22,16 @@ const HOME_CSS = `
     0%, 100% { opacity: 0.5; }
     50%      { opacity: 0.9; }
   }
-
   @keyframes ss-panel-in {
     from { opacity: 0; transform: rotate(-2deg) translateY(24px); }
     to   { opacity: 1; transform: rotate(-2deg) translateY(0); }
+  }
+  @keyframes ss-laser-pulse {
+    0%, 100% { opacity: 0.12; }
+    50%      { opacity: 0.7; }
+  }
+  @keyframes ss-marquee {
+    to { transform: translateX(-50%); }
   }
 
   .ss-hero-eyebrow { animation: ss-fade-in-up 0.8s ease 0.1s both; }
@@ -37,10 +44,24 @@ const HOME_CSS = `
   .ss-hero-glow {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 30% 40%, rgba(124,58,237,0.3), transparent 60%);
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(124,58,237,0.3), transparent 60%),
+      radial-gradient(ellipse at 80% 75%, rgba(255,45,149,0.14), transparent 55%);
     animation: ss-hue-shift 10s ease-in-out infinite;
     pointer-events: none;
   }
+
+  .ss-laser {
+    position: absolute;
+    left: -20%;
+    width: 140%;
+    height: 1px;
+    pointer-events: none;
+    animation: ss-laser-pulse 5s ease-in-out infinite;
+  }
+  .ss-laser-1 { top: 20%; transform: rotate(-14deg); background: linear-gradient(90deg, transparent, rgba(0,229,255,0.55), transparent); }
+  .ss-laser-2 { top: 56%; transform: rotate(9deg); background: linear-gradient(90deg, transparent, rgba(255,45,149,0.45), transparent); animation-delay: 1.6s; }
+  .ss-laser-3 { top: 80%; transform: rotate(-5deg); background: linear-gradient(90deg, transparent, rgba(124,58,237,0.55), transparent); animation-delay: 3.1s; }
 
   .ss-hero-grid {
     position: relative;
@@ -109,6 +130,83 @@ const HOME_CSS = `
     color: #CBD5E1;
   }
 
+  .ss-ticker {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 18px 0;
+    background: #111111;
+    border-top: 1px solid rgba(124,58,237,0.3);
+    border-bottom: 1px solid rgba(0,229,255,0.2);
+    transform: skewY(-1.2deg);
+    margin: -12px 0;
+  }
+  .ss-ticker-track {
+    display: inline-flex;
+    align-items: baseline;
+    animation: ss-marquee 30s linear infinite;
+    will-change: transform;
+  }
+  .ss-ticker:hover .ss-ticker-track { animation-play-state: paused; }
+  .ss-ticker-item {
+    font-family: var(--font-bebas);
+    font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);
+    letter-spacing: 0.06em;
+    padding: 0 28px;
+  }
+  .ss-ticker-solid-purple  { color: #7C3AED; text-shadow: 0 0 24px rgba(124,58,237,0.6); }
+  .ss-ticker-solid-cyan    { color: #00E5FF; text-shadow: 0 0 24px rgba(0,229,255,0.5); }
+  .ss-ticker-solid-magenta { color: #FF2D95; text-shadow: 0 0 24px rgba(255,45,149,0.5); }
+  .ss-ticker-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(248,250,252,0.45);
+  }
+  .ss-ticker-dot { color: rgba(248,250,252,0.35); font-size: 0.6em; }
+
+  .ss-value-tile {
+    background: #1A1A1A;
+    border-radius: 12px;
+    padding: 32px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .ss-value-tile:hover { transform: translateY(-4px); }
+  .ss-value-tile.ss-glow-purple:hover { border-color: rgba(124,58,237,0.6); box-shadow: 0 12px 32px rgba(124,58,237,0.2); }
+  .ss-value-tile.ss-glow-cyan:hover { border-color: rgba(0,229,255,0.6); box-shadow: 0 12px 32px rgba(0,229,255,0.2); }
+  .ss-value-tile.ss-glow-magenta:hover { border-color: rgba(255,45,149,0.6); box-shadow: 0 12px 32px rgba(255,45,149,0.2); }
+  .ss-value-feature {
+    background: linear-gradient(155deg, rgba(124,58,237,0.18), rgba(10,10,10,0.4));
+  }
+
+  .ss-exp-card {
+    transition: transform 0.3s ease;
+  }
+  .ss-exp-card:hover { transform: translateY(-4px); }
+  .ss-exp-card:hover .ss-exp-image-overlay { opacity: 0.55; }
+  .ss-exp-card:hover .ss-exp-name { text-shadow: 0 0 24px rgba(124,58,237,0.6); }
+
+  .ss-exp-image-wrap img { transition: transform 0.6s ease; }
+  .ss-exp-card:hover .ss-exp-image-wrap img { transform: scale(1.05); }
+
+  .ss-exp-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124,58,237,0.35), rgba(255,45,149,0.2), rgba(0,229,255,0.25));
+    opacity: 0.25;
+    transition: opacity 0.3s ease;
+  }
+
+  .ss-exp-index {
+    font-family: var(--font-bebas);
+    font-size: clamp(3rem, 4vw + 1rem, 5rem);
+    color: rgba(124,58,237,0.35);
+    line-height: 1;
+    margin-bottom: -8px;
+  }
+
   .ss-event-card {
     position: relative;
     overflow: hidden;
@@ -172,40 +270,6 @@ const HOME_CSS = `
     background: rgba(124,58,237,0.1);
   }
 
-  .ss-value-tile {
-    background: #1A1A1A;
-    border-radius: 12px;
-    padding: 32px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid transparent;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-  .ss-value-tile:hover { transform: translateY(-4px); }
-  .ss-value-tile.ss-glow-purple:hover { border-color: rgba(124,58,237,0.6); box-shadow: 0 12px 32px rgba(124,58,237,0.2); }
-  .ss-value-tile.ss-glow-cyan:hover { border-color: rgba(0,229,255,0.6); box-shadow: 0 12px 32px rgba(0,229,255,0.2); }
-  .ss-value-tile.ss-glow-magenta:hover { border-color: rgba(255,45,149,0.6); box-shadow: 0 12px 32px rgba(255,45,149,0.2); }
-  .ss-value-feature {
-    background: linear-gradient(155deg, rgba(124,58,237,0.18), rgba(10,10,10,0.4));
-  }
-
-  @keyframes ss-pill-pop {
-    0%   { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-
-  .ss-genre-pill-container > * {
-    display: inline-block;
-    animation: ss-pill-pop 0.3s ease forwards;
-    opacity: 0;
-  }
-  .ss-genre-pill-container > *:nth-child(1) { animation-delay: 0.05s; }
-  .ss-genre-pill-container > *:nth-child(2) { animation-delay: 0.1s; }
-  .ss-genre-pill-container > *:nth-child(3) { animation-delay: 0.15s; }
-  .ss-genre-pill-container > *:nth-child(4) { animation-delay: 0.2s; }
-  .ss-genre-pill-container > *:nth-child(5) { animation-delay: 0.25s; }
-
   @media (max-width: 900px) {
     .ss-hero-grid { grid-template-columns: 1fr !important; }
     .ss-hero-panel-wrap { order: -1; }
@@ -218,12 +282,16 @@ const HOME_CSS = `
     .ss-values-grid { grid-template-columns: 1fr !important; grid-template-areas: none !important; }
     .ss-values-grid > * { grid-area: auto !important; }
     .ss-section-pad { padding: 60px 16px !important; }
+    .ss-exp-row { flex-direction: column !important; }
+    .ss-exp-image-wrap { aspect-ratio: 16/9 !important; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ss-hero-eyebrow, .ss-hero-title, .ss-hero-tagline, .ss-hero-quote, .ss-hero-cta, .ss-hero-panel, .ss-scroll-cue-line {
+    .ss-hero-eyebrow, .ss-hero-title, .ss-hero-tagline, .ss-hero-quote, .ss-hero-cta, .ss-hero-panel, .ss-scroll-cue-line, .ss-laser {
       animation: none !important;
     }
+    .ss-ticker-track { animation: none !important; }
+    .ss-exp-image-wrap img { transition: none !important; }
   }
 `
 
@@ -266,14 +334,20 @@ const VALUE_TILES = [
   },
 ]
 
-const WORLD_ITEMS = [
-  { label: 'Underground Club Nights' },
-  { label: 'International & New Zealand Artists' },
-  { label: 'Premium Sound & Lighting' },
-  { label: 'Immersive Visual Experiences' },
-  { label: 'Creative Themes' },
-  { label: 'Inclusive Dancefloors' },
-  { label: 'Unforgettable Memories' },
+const TICKER_ITEMS = [
+  { text: 'House', style: 'ss-ticker-solid-purple' },
+  { text: 'Techno', style: 'ss-ticker-outline' },
+  { text: 'Trance', style: 'ss-ticker-solid-cyan' },
+  { text: 'Progressive', style: 'ss-ticker-outline' },
+  { text: 'Psytrance', style: 'ss-ticker-solid-magenta' },
+  { text: 'Signature Socials', style: 'ss-ticker-outline' },
+]
+
+const REASONS = [
+  { label: 'Powerful Sound Systems', desc: 'Rigs tuned for clarity at full volume.' },
+  { label: 'Immersive Lighting', desc: 'Lasers, haze and visuals built for the room.' },
+  { label: 'Carefully Curated DJs', desc: 'Selectors who understand the crowd.' },
+  { label: 'Packed Dancefloors', desc: 'Energy that feeds back into itself all night.' },
 ]
 
 const CLOSING_LINES = [
@@ -287,6 +361,19 @@ const UPCOMING_EVENTS = [
   { name: 'Anti Social — Winter Edition', date: 'Coming Soon', venue: 'TBC, Wellington' },
   { name: 'Bass Ritual: Chapter One', date: 'Coming Soon', venue: 'TBC, Christchurch' },
 ]
+
+function TickerRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
+  return (
+    <span aria-hidden={ariaHidden}>
+      {TICKER_ITEMS.map((item) => (
+        <span key={item.text}>
+          <span className={`ss-ticker-item ${item.style}`}>{item.text.toUpperCase()}</span>
+          <span className="ss-ticker-dot">◆</span>
+        </span>
+      ))}
+    </span>
+  )
+}
 
 export function HomePage() {
   return (
@@ -305,9 +392,12 @@ export function HomePage() {
         }}
       >
         <div className="ss-hero-glow" />
+        <div className="ss-laser ss-laser-1" />
+        <div className="ss-laser ss-laser-2" />
+        <div className="ss-laser ss-laser-3" />
         <div className="ss-grain-overlay" />
         <div className="ss-light-sweep" />
-        <ParticleField count={10} topRange={[10, 90]} />
+        <ParticleField count={12} topRange={[10, 90]} />
 
         <div className="ss-hero-grid">
           <div className="ss-hero-copy" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -371,7 +461,7 @@ export function HomePage() {
               Some nights are forgotten. Others become stories you&apos;ll tell for years.
             </p>
 
-            <Link href="/experiences" className="ss-cta-btn ss-hero-cta" style={{ marginTop: '36px' }}>
+            <Link href="#experiences" className="ss-cta-btn ss-hero-cta" style={{ marginTop: '36px' }}>
               Explore Experiences
             </Link>
           </div>
@@ -405,7 +495,15 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 2: Intro / Values */}
+      {/* SECTION 2: Genre ticker */}
+      <div className="ss-ticker" aria-label="Genres: House, Techno, Trance, Progressive, Psytrance">
+        <div className="ss-ticker-track">
+          <TickerRow />
+          <TickerRow ariaHidden />
+        </div>
+      </div>
+
+      {/* SECTION 3: Intro / Values */}
       <section className="ss-section-pad" style={{ padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         <RevealSection>
           <h2
@@ -480,8 +578,142 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 3: Our World */}
-      <section className="ss-section-pad" style={{ padding: '100px 24px', maxWidth: '900px', margin: '0 auto' }}>
+      {/* SECTION 4: Experiences */}
+      <section
+        id="experiences"
+        className="ss-section-pad"
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '100px 24px',
+          scrollMarginTop: '80px',
+        }}
+      >
+        <RevealSection>
+          <span className="ss-eyebrow">{experiences.length} Signature Experiences</span>
+          <h2
+            style={{
+              fontFamily: 'var(--font-bebas)',
+              fontSize: 'clamp(2.5rem, 4vw + 1rem, 4.5rem)',
+              color: '#F8FAFC',
+              margin: '12px 0 16px',
+              lineHeight: 0.95,
+            }}
+          >
+            EVERY EVENT HAS A <span className="ss-gradient-text">PULSE</span>
+          </h2>
+          <p
+            style={{
+              fontFamily: 'var(--font-inter)',
+              fontSize: '16px',
+              color: '#CBD5E1',
+              maxWidth: '560px',
+              lineHeight: 1.6,
+              marginBottom: '72px',
+            }}
+          >
+            No templates. No ordinary nights. Every Signature Socials experience is built with its own
+            identity, atmosphere and story.
+          </p>
+        </RevealSection>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
+          {experiences.map((experience, index) => {
+            const isEven = index % 2 === 0
+            return (
+              <RevealSection key={experience.id}>
+                <div
+                  className="ss-exp-card ss-exp-row"
+                  style={{
+                    display: 'flex',
+                    flexDirection: isEven ? 'row' : 'row-reverse',
+                    gap: '48px',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div
+                    className="ss-exp-image-wrap"
+                    style={{
+                      position: 'relative',
+                      flex: '1 1 50%',
+                      aspectRatio: '4/3',
+                      borderRadius: '16px',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {experience.image && (
+                      <Image
+                        src={experience.image}
+                        alt={experience.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        style={{ objectFit: 'cover' }}
+                      />
+                    )}
+                    <div className="ss-scanlines" style={{ zIndex: 0 }} />
+                    <div className="ss-light-sweep" style={{ borderRadius: '16px' }} />
+                    <div className="ss-exp-image-overlay" />
+                  </div>
+
+                  <div style={{ flex: '1 1 50%' }}>
+                    <div className="ss-exp-index">{String(index + 1).padStart(2, '0')}</div>
+                    <h3
+                      className="ss-exp-name"
+                      style={{
+                        fontFamily: 'var(--font-bebas)',
+                        fontSize: 'clamp(2.5rem, 4vw + 1rem, 4rem)',
+                        color: '#F8FAFC',
+                        margin: 0,
+                        transition: 'text-shadow 0.3s ease',
+                      }}
+                    >
+                      {experience.name.toUpperCase()}
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: 'var(--font-inter)',
+                        fontSize: '16px',
+                        color: '#00E5FF',
+                        fontWeight: 500,
+                        marginTop: '8px',
+                      }}
+                    >
+                      {experience.tagline}
+                    </p>
+                    <div
+                      style={{
+                        borderTop: '1px dashed rgba(248,250,252,0.2)',
+                        margin: '20px 0',
+                      }}
+                    />
+                    <p
+                      style={{
+                        fontFamily: 'var(--font-inter)',
+                        fontSize: '15px',
+                        color: '#CBD5E1',
+                        lineHeight: 1.7,
+                        marginBottom: '20px',
+                      }}
+                    >
+                      {experience.description}
+                    </p>
+                    <div>
+                      {experience.vibe.split(' · ').map((tag) => (
+                        <span key={tag} className="ss-pill">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </RevealSection>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* SECTION 5: Why People Keep Coming Back */}
+      <section className="ss-section-pad" style={{ maxWidth: '900px', margin: '0 auto', padding: '100px 24px' }}>
         <RevealSection>
           <h2
             style={{
@@ -491,29 +723,35 @@ export function HomePage() {
               marginBottom: '32px',
             }}
           >
-            Our World
+            Why People Keep Coming Back
           </h2>
         </RevealSection>
-
-        <IndexList items={WORLD_ITEMS} accent="purple" />
-
-        <RevealSection>
-          <div style={{ marginTop: '40px', display: 'flex', alignItems: 'baseline', gap: '20px', flexWrap: 'wrap' }}>
-            <span className="ss-eyebrow">The Sound</span>
-            <div className="ss-genre-pill-container">
-              {['House', 'Techno', 'Trance', 'Progressive', 'Psytrance'].map((genre) => (
-                <span key={genre} className="ss-pill">
-                  {genre}
-                </span>
-              ))}
-            </div>
-          </div>
-        </RevealSection>
+        <IndexList items={REASONS} accent="cyan" />
       </section>
 
-      {/* SECTION: Upcoming Events */}
-      <section className="ss-section-pad" style={{ padding: '100px 24px', background: '#1A1A1A' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      {/* SECTION 6: Upcoming Events */}
+      <section
+        className="ss-section-pad"
+        style={{ position: 'relative', overflow: 'hidden', padding: '100px 24px' }}
+      >
+        <Image
+          src="/images/hero/bg-texture.png"
+          alt=""
+          fill
+          sizes="100vw"
+          style={{ objectFit: 'cover', zIndex: -2 }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(10,10,10,0.88) 50%, #0A0A0A 100%)',
+            zIndex: -1,
+          }}
+        />
+        <div className="ss-scanlines" />
+
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto' }}>
           <RevealSection>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>
               <span className="ss-eyebrow">Don&apos;t Miss</span>
@@ -561,7 +799,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 4: More Than an Event */}
+      {/* SECTION 7: More Than an Event */}
       <section
         style={{
           position: 'relative',
@@ -610,13 +848,13 @@ export function HomePage() {
           <p style={{ fontFamily: 'var(--font-inter)', fontSize: '16px', color: '#F8FAFC', marginBottom: '28px' }}>
             Welcome to Signature Socials. Where the night begins.
           </p>
-          <Link href="/experiences" className="ss-cta-btn">
-            Explore Experiences
+          <Link href="/about" className="ss-cta-btn">
+            Our Story
           </Link>
         </RevealSection>
       </section>
 
-      {/* SECTION 5: Footer teaser */}
+      {/* SECTION 8: Footer teaser */}
       <section style={{ padding: '48px 24px', textAlign: 'center' }}>
         <div
           style={{
