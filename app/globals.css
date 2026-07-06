@@ -56,6 +56,13 @@ img {
   top: 16px;
 }
 
+.ss-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.ss-reveal.ss-visible { opacity: 1; transform: translateY(0); }
+
 .ss-grain-overlay {
   position: absolute;
   inset: 0;
@@ -170,4 +177,5 @@ img {
   .ss-particle { display: none !important; }
   .ss-light-sweep { display: none !important; }
   .ss-card-stagger > * { opacity: 1 !important; }
+  .ss-reveal { opacity: 1 !important; transform: none !important; }
 }

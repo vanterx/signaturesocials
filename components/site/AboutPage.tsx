@@ -1,27 +1,16 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { ParticleField } from '@/components/site/ParticleField'
 import { IndexList } from '@/components/site/IndexList'
+import { RevealSection } from '@/components/site/RevealSection'
 
 const ABOUT_CSS = `
-  .ss-reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .ss-reveal.ss-visible { opacity: 1; transform: translateY(0); }
-
   @media (max-width: 900px) {
     .ss-story-row { flex-direction: column !important; }
     .ss-about-hero-row { flex-direction: column !important; align-items: center !important; text-align: center; }
     .ss-about-hero-row .ss-about-accent-line { display: none; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ss-reveal { opacity: 1 !important; transform: none !important; }
   }
 `
 
@@ -39,35 +28,6 @@ const COMMUNITY_ITEMS = [
   { label: 'Behind-the-Scenes Content' },
   { label: 'Community Stories' },
 ]
-
-function useReveal<T extends HTMLElement>() {
-  const ref = useRef<T>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.15 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  return { ref, isVisible }
-}
-
-function RevealSection({ children }: { children: React.ReactNode }) {
-  const { ref, isVisible } = useReveal<HTMLDivElement>()
-  return (
-    <div ref={ref} className={`ss-reveal ${isVisible ? 'ss-visible' : ''}`}>
-      {children}
-    </div>
-  )
-}
 
 export function AboutPage() {
   return (

@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Music, Zap, Sparkles, Users } from 'lucide-react'
 import { ParticleField } from '@/components/site/ParticleField'
 import { IndexList } from '@/components/site/IndexList'
+import { RevealSection } from '@/components/site/RevealSection'
 
 const HOME_CSS = `
   @keyframes ss-fade-in-up {
@@ -116,6 +116,53 @@ const HOME_CSS = `
     transform: translateY(-2px);
   }
 
+  .ss-event-card {
+    background: #0A0A0A;
+    border-radius: 12px;
+    border: 1px solid rgba(124,58,237,0.25);
+    padding: 32px;
+    transition: all 0.3s ease;
+  }
+  .ss-event-card:hover {
+    border-color: rgba(124,58,237,0.7);
+    box-shadow: 0 12px 32px rgba(124,58,237,0.2);
+    transform: translateY(-4px);
+  }
+
+  .ss-event-btn-primary {
+    display: inline-block;
+    font-family: var(--font-inter);
+    font-size: 12px;
+    font-weight: 600;
+    color: #F8FAFC;
+    background: #7C3AED;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .ss-event-btn-primary:hover {
+    background: #9D5CFF;
+    box-shadow: 0 0 16px rgba(124,58,237,0.5);
+  }
+
+  .ss-event-btn-secondary {
+    display: inline-block;
+    font-family: var(--font-inter);
+    font-size: 12px;
+    font-weight: 600;
+    color: #7C3AED;
+    border: 1px solid rgba(124,58,237,0.5);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .ss-event-btn-secondary:hover {
+    border-color: #7C3AED;
+    background: rgba(124,58,237,0.1);
+  }
+
   .ss-value-tile {
     background: #1A1A1A;
     border-radius: 12px;
@@ -171,13 +218,6 @@ const HOME_CSS = `
   .ss-genre-pill-container > *:nth-child(4) { animation-delay: 0.2s; }
   .ss-genre-pill-container > *:nth-child(5) { animation-delay: 0.25s; }
 
-  .ss-reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .ss-reveal.ss-visible { opacity: 1; transform: translateY(0); }
-
   @media (max-width: 900px) {
     .ss-hero-grid { grid-template-columns: 1fr !important; }
     .ss-hero-panel-wrap { order: -1; }
@@ -196,7 +236,6 @@ const HOME_CSS = `
     .ss-hero-eyebrow, .ss-hero-title, .ss-hero-tagline, .ss-hero-quote, .ss-hero-cta, .ss-hero-panel, .ss-scroll-cue-line {
       animation: none !important;
     }
-    .ss-reveal { opacity: 1 !important; transform: none !important; }
   }
 `
 
@@ -256,35 +295,6 @@ const UPCOMING_EVENTS = [
   { name: 'Anti Social — Winter Edition', date: 'Coming Soon', venue: 'TBC, Wellington' },
   { name: 'Bass Ritual: Chapter One', date: 'Coming Soon', venue: 'TBC, Christchurch' },
 ]
-
-function useReveal<T extends HTMLElement>() {
-  const ref = useRef<T>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.2 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  return { ref, isVisible }
-}
-
-function RevealSection({ children }: { children: React.ReactNode }) {
-  const { ref, isVisible } = useReveal<HTMLDivElement>()
-  return (
-    <div ref={ref} className={`ss-reveal ${isVisible ? 'ss-visible' : ''}`}>
-      {children}
-    </div>
-  )
-}
 
 export function HomePage() {
   return (
@@ -556,25 +566,7 @@ export function HomePage() {
           >
             {UPCOMING_EVENTS.map((event) => (
               <RevealSection key={event.name}>
-                <div
-                  style={{
-                    background: '#0A0A0A',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(124,58,237,0.25)',
-                    padding: '32px',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(124,58,237,0.7)'
-                    e.currentTarget.style.boxShadow = '0 12px 32px rgba(124,58,237,0.2)'
-                    e.currentTarget.style.transform = 'translateY(-4px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(124,58,237,0.25)'
-                    e.currentTarget.style.boxShadow = 'none'
-                    e.currentTarget.style.transform = 'none'
-                  }}
-                >
+                <div className="ss-event-card">
                   <div style={{ fontFamily: 'var(--font-bebas)', fontSize: '24px', color: '#F8FAFC', marginBottom: '4px' }}>
                     {event.name}
                   </div>
@@ -585,52 +577,8 @@ export function HomePage() {
                     {event.venue}
                   </div>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <span
-                      style={{
-                        fontFamily: 'var(--font-inter)',
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        color: '#F8FAFC',
-                        background: '#7C3AED',
-                        padding: '8px 16px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#9D5CFF'
-                        e.currentTarget.style.boxShadow = '0 0 16px rgba(124,58,237,0.5)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#7C3AED'
-                        e.currentTarget.style.boxShadow = 'none'
-                      }}
-                    >
-                      Get Tickets
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: 'var(--font-inter)',
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        color: '#7C3AED',
-                        border: '1px solid rgba(124,58,237,0.5)',
-                        padding: '8px 16px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = '#7C3AED'
-                        e.currentTarget.style.background = 'rgba(124,58,237,0.1)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.5)'
-                        e.currentTarget.style.background = 'transparent'
-                      }}
-                    >
-                      FB Event
-                    </span>
+                    <span className="ss-event-btn-primary">Get Tickets</span>
+                    <span className="ss-event-btn-secondary">FB Event</span>
                   </div>
                 </div>
               </RevealSection>

@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ParticleField } from '@/components/site/ParticleField'
 import { IndexList } from '@/components/site/IndexList'
+import { RevealSection } from '@/components/site/RevealSection'
 import { experiences } from '@/lib/experiences-data'
 
 const EXPERIENCES_CSS = `
@@ -85,13 +85,6 @@ const EXPERIENCES_CSS = `
     transform: translateY(-2px);
   }
 
-  .ss-reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .ss-reveal.ss-visible { opacity: 1; transform: translateY(0); }
-
   @media (max-width: 768px) {
     .ss-exp-row { flex-direction: column !important; }
     .ss-exp-image-wrap { aspect-ratio: 16/9 !important; }
@@ -101,7 +94,6 @@ const EXPERIENCES_CSS = `
 
   @media (prefers-reduced-motion: reduce) {
     .ss-float-shape { animation: none !important; }
-    .ss-reveal { opacity: 1 !important; transform: none !important; }
   }
 `
 
@@ -111,35 +103,6 @@ const REASONS = [
   { label: 'Carefully Curated DJs', desc: 'Selectors who understand the crowd.' },
   { label: 'Packed Dancefloors', desc: 'Energy that feeds back into itself all night.' },
 ]
-
-function useReveal<T extends HTMLElement>() {
-  const ref = useRef<T>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.15 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  return { ref, isVisible }
-}
-
-function RevealSection({ children }: { children: React.ReactNode }) {
-  const { ref, isVisible } = useReveal<HTMLDivElement>()
-  return (
-    <div ref={ref} className={`ss-reveal ${isVisible ? 'ss-visible' : ''}`}>
-      {children}
-    </div>
-  )
-}
 
 export function ExperiencesPage() {
   return (

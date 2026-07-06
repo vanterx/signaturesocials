@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
@@ -103,6 +103,46 @@ const NAV_CSS = `
 export function Nav() {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const hamburgerRef = useRef<HTMLButtonElement>(null)
+  const overlayRef = useRef<HTMLDivElement>(null)
+  const firstLinkRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    if (!isMenuOpen) return
+
+    firstLinkRef.current?.focus()
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false)
+        return
+      }
+
+      if (e.key !== 'Tab') return
+
+      const focusable = overlayRef.current?.querySelectorAll<HTMLElement>('a[href]')
+      if (!focusable || focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isMenuOpen])
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+    hamburgerRef.current?.focus()
+  }
 
   return (
     <>
@@ -205,6 +245,7 @@ export function Nav() {
           </div>
 
           <button
+            ref={hamburgerRef}
             type="button"
             className="ss-hamburger-btn"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -218,7 +259,11 @@ export function Nav() {
 
       {isMenuOpen && (
         <div
+          ref={overlayRef}
           className="ss-mobile-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site navigation"
           style={{
             position: 'fixed',
             inset: 0,
@@ -231,12 +276,13 @@ export function Nav() {
             gap: '36px',
           }}
         >
-          {NAV_LINKS.map((link) => (
+          {NAV_LINKS.map((link, i) => (
             <Link
               key={link.href}
+              ref={i === 0 ? firstLinkRef : undefined}
               href={link.href}
               className={`ss-mobile-link ${pathname === link.href ? 'ss-active' : ''}`}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={closeMenu}
             >
               {link.label}
             </Link>
