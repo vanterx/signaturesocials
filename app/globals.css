@@ -103,25 +103,33 @@ img {
   transform: translateY(-2px);
 }
 
-.ss-pill {
+/* Skewed ticket-stub tag — deliberately not a rounded pill */
+.ss-tag {
   display: inline-block;
-  font-family: var(--font-inter);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: #f8fafc;
-  background: rgba(124, 58, 237, 0.12);
+  transform: skewX(-10deg);
+  background: rgba(124, 58, 237, 0.08);
   border: 1px solid rgba(124, 58, 237, 0.45);
+  border-left: 3px solid #7c3aed;
   padding: 5px 14px;
-  border-radius: 999px;
-  margin: 4px 8px 0 0;
-  transition: all 0.3s ease;
+  margin: 6px 10px 0 0;
+  transition: all 0.25s ease;
 }
-.ss-pill:hover {
-  background: rgba(124, 58, 237, 0.35);
-  border-color: rgba(0, 229, 255, 0.6);
-  box-shadow: 0 0 16px rgba(124, 58, 237, 0.3);
-  transform: translateY(-2px);
+.ss-tag > span {
+  display: inline-block;
+  transform: skewX(10deg);
+  font-family: var(--font-inter);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f8fafc;
+}
+.ss-tag:hover {
+  border-color: rgba(0, 229, 255, 0.7);
+  border-left-color: #00e5ff;
+  background: rgba(0, 229, 255, 0.1);
+  box-shadow: 0 0 18px rgba(124, 58, 237, 0.35);
+  transform: skewX(-10deg) translateY(-2px);
 }
 
 .ss-reveal {

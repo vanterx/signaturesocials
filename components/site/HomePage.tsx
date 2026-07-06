@@ -686,8 +686,8 @@ export function HomePage() {
                     </p>
                     <div>
                       {experience.vibe.split(' · ').map((tag) => (
-                        <span key={tag} className="ss-pill">
-                          {tag}
+                        <span key={tag} className="ss-tag">
+                          <span>{tag}</span>
                         </span>
                       ))}
                     </div>
