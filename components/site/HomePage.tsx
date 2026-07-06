@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronDown, Music, Zap, Sparkles, Users, Disc3, Sun, Speaker, Heart, PartyPopper } from 'lucide-react'
+import { ParticleField } from '@/components/site/ParticleField'
 
 const HOME_CSS = `
   @keyframes ss-fade-in-up {
@@ -20,7 +21,7 @@ const HOME_CSS = `
   }
 
   .ss-hero-eyebrow { animation: ss-fade-in-up 0.8s ease 0.1s both; }
-  .ss-hero-title   { animation: ss-fade-in-up 0.8s ease 0.3s both; }
+  .ss-hero-title   { animation: ss-fade-in-up 0.8s ease 0.3s both, ss-pulse-glow 4s ease-in-out infinite 1.1s; }
   .ss-hero-tagline { animation: ss-fade-in-up 0.8s ease 0.5s both; }
   .ss-hero-quote   { animation: ss-fade-in-up 0.8s ease 0.7s both; }
   .ss-hero-cta     { animation: ss-fade-in-up 0.8s ease 0.9s both; }
@@ -91,7 +92,30 @@ const HOME_CSS = `
     padding: 4px 12px;
     border-radius: 999px;
     margin: 4px 6px 0 0;
+    transition: all 0.3s ease;
   }
+  .ss-genre-pill:hover {
+    background: rgba(124,58,237,0.35);
+    border-color: rgba(0,229,255,0.6);
+    box-shadow: 0 0 16px rgba(124,58,237,0.3);
+    transform: translateY(-2px);
+  }
+
+  @keyframes ss-pill-pop {
+    0%   { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .ss-genre-pill-container > * {
+    display: inline-block;
+    animation: ss-pill-pop 0.3s ease forwards;
+    opacity: 0;
+  }
+  .ss-genre-pill-container > *:nth-child(1) { animation-delay: 0.05s; }
+  .ss-genre-pill-container > *:nth-child(2) { animation-delay: 0.1s; }
+  .ss-genre-pill-container > *:nth-child(3) { animation-delay: 0.15s; }
+  .ss-genre-pill-container > *:nth-child(4) { animation-delay: 0.2s; }
+  .ss-genre-pill-container > *:nth-child(5) { animation-delay: 0.25s; }
 
   .ss-reveal {
     opacity: 0;
@@ -206,6 +230,10 @@ export function HomePage() {
         />
         <div className="ss-hero-glow" />
         <div className="ss-grain-overlay" />
+        <div className="ss-scanlines" />
+        <div className="ss-vignette" />
+        <div className="ss-light-sweep" />
+        <ParticleField count={14} topRange={[40, 90]} />
 
         <span
           className="ss-hero-eyebrow"
@@ -231,7 +259,6 @@ export function HomePage() {
             letterSpacing: '0.02em',
             color: '#F8FAFC',
             margin: 0,
-            textShadow: '0 0 60px rgba(124,58,237,0.4)',
           }}
         >
           SIGNATURE SOCIALS
@@ -314,7 +341,7 @@ export function HomePage() {
         </RevealSection>
 
         <div
-          className="ss-values-grid"
+          className="ss-values-grid ss-card-stagger"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
@@ -360,7 +387,7 @@ export function HomePage() {
         </RevealSection>
 
         <div
-          className="ss-world-grid"
+          className="ss-world-grid ss-card-stagger"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
@@ -382,7 +409,7 @@ export function HomePage() {
               <p style={{ fontFamily: 'var(--font-inter)', fontSize: '15px', fontWeight: 500, color: '#F8FAFC', margin: '0 0 4px' }}>
                 Genres
               </p>
-              <div>
+              <div className="ss-genre-pill-container">
                 {['House', 'Techno', 'Trance', 'Progressive', 'Psytrance'].map((genre) => (
                   <span key={genre} className="ss-genre-pill">
                     {genre}
@@ -397,13 +424,19 @@ export function HomePage() {
       {/* SECTION 4: More Than an Event */}
       <section
         style={{
+          position: 'relative',
+          overflow: 'hidden',
           padding: '120px 24px',
           textAlign: 'center',
           background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(124,58,237,0.08) 50%, #0A0A0A 100%)',
         }}
       >
+        <div className="ss-light-sweep" />
+        <ParticleField count={8} topRange={[20, 80]} />
+
         <RevealSection>
           <h2
+            className="ss-pulse-glow"
             style={{
               fontFamily: 'var(--font-bebas)',
               fontSize: 'clamp(2.5rem, 4vw + 1rem, 4.5rem)',

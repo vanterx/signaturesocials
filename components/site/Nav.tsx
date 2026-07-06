@@ -12,6 +12,15 @@ const NAV_CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  @keyframes ss-nav-glow {
+    0%, 100% { border-color: rgba(124,58,237,0.2); }
+    50%      { border-color: rgba(0,229,255,0.3); }
+  }
+
+  .ss-nav-border {
+    animation: ss-nav-glow 6s ease-in-out infinite;
+  }
+
   .ss-nav-link {
     position: relative;
     font-family: var(--font-inter);
@@ -79,6 +88,7 @@ export function Nav() {
     <>
       <style dangerouslySetInnerHTML={{ __html: NAV_CSS }} />
       <header
+        className="ss-nav-border"
         style={{
           position: 'fixed',
           top: 0,
@@ -88,7 +98,8 @@ export function Nav() {
           background: 'rgba(10,10,10,0.95)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(124,58,237,0.2)',
+          borderBottomWidth: '1px',
+          borderBottomStyle: 'solid',
         }}
       >
         <nav

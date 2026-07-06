@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Speaker, Sun, Disc3, PartyPopper } from 'lucide-react'
 import { SectionHeading } from '@/components/site/SectionHeading'
+import { ParticleField } from '@/components/site/ParticleField'
 import { experiences } from '@/lib/experiences-data'
 
 const EXPERIENCES_CSS = `
@@ -160,6 +161,8 @@ export function ExperiencesPage() {
         }}
       >
         <div className="ss-grain-overlay" />
+        <div className="ss-light-sweep" />
+        <ParticleField count={10} topRange={[15, 85]} />
         <div
           className="ss-float-shape"
           style={{
@@ -262,6 +265,8 @@ export function ExperiencesPage() {
                       style={{ objectFit: 'cover' }}
                     />
                   )}
+                  <div className="ss-scanlines" style={{ zIndex: 0 }} />
+                  <div className="ss-light-sweep" style={{ borderRadius: '16px' }} />
                   <div className="ss-exp-image-overlay" />
                 </div>
 
@@ -325,7 +330,7 @@ export function ExperiencesPage() {
         <RevealSection>
           <SectionHeading label="Signature Socials" title="Why People Keep Coming Back" align="center" />
         </RevealSection>
-        <div className="ss-reasons-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+        <div className="ss-reasons-grid ss-card-stagger" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
           {REASONS.map(({ icon: Icon, label, desc }) => (
             <RevealSection key={label}>
               <div className="ss-reason-card">
@@ -347,11 +352,16 @@ export function ExperiencesPage() {
       {/* SECTION 4: Closing Banner */}
       <section
         style={{
+          position: 'relative',
+          overflow: 'hidden',
           padding: '100px 24px',
           textAlign: 'center',
           background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(124,58,237,0.15) 50%, #0A0A0A 100%)',
         }}
       >
+        <div className="ss-light-sweep" />
+        <ParticleField count={6} topRange={[20, 80]} />
+
         <RevealSection>
           <h2
             style={{

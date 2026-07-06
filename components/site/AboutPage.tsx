@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Calendar, Megaphone, Ticket, Star, Camera, Users } from 'lucide-react'
 import { SectionHeading } from '@/components/site/SectionHeading'
+import { ParticleField } from '@/components/site/ParticleField'
 
 const ABOUT_CSS = `
   .ss-reveal {
@@ -112,6 +113,8 @@ export function AboutPage() {
         }}
       >
         <div className="ss-grain-overlay" />
+        <div className="ss-light-sweep" />
+        <ParticleField count={10} topRange={[15, 85]} />
         <h1
           style={{
             fontFamily: 'var(--font-bebas)',
@@ -204,6 +207,7 @@ export function AboutPage() {
       >
         <RevealSection>
           <p
+            className="ss-pulse-glow"
             style={{
               fontFamily: 'var(--font-bebas)',
               fontSize: 'clamp(2rem, 3.5vw + 1rem, 3.25rem)',
@@ -241,7 +245,7 @@ export function AboutPage() {
             align="center"
           />
         </RevealSection>
-        <div className="ss-community-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+        <div className="ss-community-grid ss-card-stagger" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
           {COMMUNITY_ITEMS.map(({ icon: Icon, label }) => (
             <RevealSection key={label}>
               <div className="ss-community-card">
@@ -281,6 +285,11 @@ export function AboutPage() {
             zIndex: -1,
           }}
         />
+        <div className="ss-grain-overlay" />
+        <div className="ss-scanlines" />
+        <div className="ss-light-sweep" />
+        <ParticleField count={10} topRange={[20, 80]} />
+
         <RevealSection>
           <p
             style={{

@@ -64,6 +64,99 @@ img {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ─── Ambient floating particles ─── */
+@keyframes ss-float-particle {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.3; }
+  100% { transform: translateY(-120px) translateX(var(--drift, 15px)); opacity: 0; }
+}
+
+.ss-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #7C3AED;
+  pointer-events: none;
+  animation: ss-float-particle var(--duration, 8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+.ss-particle.ss-cyan { background: #00E5FF; }
+.ss-particle.ss-magenta { background: #FF2D95; }
+
+/* ─── Light sweep beam ─── */
+@keyframes ss-light-sweep {
+  0%   { transform: translateX(-100%) skewX(-15deg); opacity: 0; }
+  10%  { opacity: 0.15; }
+  90%  { opacity: 0.08; }
+  100% { transform: translateX(300%) skewX(-15deg); opacity: 0; }
+}
+
+.ss-light-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(124,58,237,0.15), rgba(0,229,255,0.08), transparent);
+  pointer-events: none;
+  animation: ss-light-sweep 8s ease-in-out infinite;
+}
+
+/* ─── Pulsing text glow ─── */
+@keyframes ss-pulse-glow {
+  0%, 100% { text-shadow: 0 0 40px rgba(124,58,237,0.3), 0 0 80px rgba(124,58,237,0.1); }
+  50%      { text-shadow: 0 0 60px rgba(124,58,237,0.6), 0 0 120px rgba(124,58,237,0.25), 0 0 180px rgba(124,58,237,0.1); }
+}
+
+.ss-pulse-glow {
+  animation: ss-pulse-glow 4s ease-in-out infinite;
+}
+
+/* ─── Scanline overlay ─── */
+.ss-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  z-index: 1;
+}
+
+/* ─── Vignette ─── */
+.ss-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+  z-index: 1;
+}
+
+/* ─── Staggered entrance for card grids ─── */
+@keyframes ss-card-pop {
+  from { opacity: 0; transform: scale(0.92) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.ss-card-stagger > * {
+  opacity: 0;
+  animation: ss-card-pop 0.5s ease forwards;
+}
+.ss-card-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.ss-card-stagger > *:nth-child(2) { animation-delay: 0.1s; }
+.ss-card-stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.ss-card-stagger > *:nth-child(4) { animation-delay: 0.2s; }
+.ss-card-stagger > *:nth-child(5) { animation-delay: 0.25s; }
+.ss-card-stagger > *:nth-child(6) { animation-delay: 0.3s; }
+.ss-card-stagger > *:nth-child(7) { animation-delay: 0.35s; }
+.ss-card-stagger > *:nth-child(8) { animation-delay: 0.4s; }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -73,4 +166,8 @@ img {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+
+  .ss-particle { display: none !important; }
+  .ss-light-sweep { display: none !important; }
+  .ss-card-stagger > * { opacity: 1 !important; }
 }
