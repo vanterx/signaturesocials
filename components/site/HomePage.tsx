@@ -3,17 +3,19 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronDown, Music, Zap, Sparkles, Users, Disc3, Sun, Speaker, Heart, PartyPopper } from 'lucide-react'
+import { Music, Zap, Sparkles, Users } from 'lucide-react'
 import { ParticleField } from '@/components/site/ParticleField'
+import { IndexList } from '@/components/site/IndexList'
 
 const HOME_CSS = `
   @keyframes ss-fade-in-up {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  @keyframes ss-bounce-y {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50%      { transform: translateX(-50%) translateY(10px); }
+  @keyframes ss-scroll-tick {
+    0%   { transform: scaleY(0); opacity: 0; }
+    30%  { opacity: 1; }
+    100% { transform: scaleY(1); opacity: 0; }
   }
   @keyframes ss-hue-shift {
     0%, 100% { opacity: 0.5; }
@@ -25,14 +27,73 @@ const HOME_CSS = `
   .ss-hero-tagline { animation: ss-fade-in-up 0.8s ease 0.5s both; }
   .ss-hero-quote   { animation: ss-fade-in-up 0.8s ease 0.7s both; }
   .ss-hero-cta     { animation: ss-fade-in-up 0.8s ease 0.9s both; }
-  .ss-hero-scroll  { animation: ss-bounce-y 2s ease-in-out infinite; }
+  .ss-hero-panel   { animation: ss-fade-in-up 1s ease 0.4s both; }
 
   .ss-hero-glow {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 50% 30%, rgba(124,58,237,0.35), transparent 60%);
+    background: radial-gradient(ellipse at 30% 40%, rgba(124,58,237,0.3), transparent 60%);
     animation: ss-hue-shift 10s ease-in-out infinite;
     pointer-events: none;
+  }
+
+  .ss-hero-grid {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .ss-hero-panel-wrap { display: flex; justify-content: center; }
+  .ss-hero-panel {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 3/4;
+    border-radius: 6px;
+    overflow: hidden;
+    transform: rotate(-2deg);
+    border: 1px solid rgba(124,58,237,0.45);
+    box-shadow: 0 24px 64px rgba(124,58,237,0.25), 0 0 0 8px rgba(10,10,10,1);
+  }
+  .ss-hero-panel-frame {
+    position: absolute;
+    inset: -8px;
+    border: 1px solid rgba(0,229,255,0.25);
+    border-radius: 6px;
+    transform: rotate(2deg);
+    pointer-events: none;
+  }
+
+  .ss-scroll-cue {
+    position: absolute;
+    left: 24px;
+    bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+  }
+  .ss-scroll-cue-line {
+    width: 1px;
+    height: 32px;
+    background: #7C3AED;
+    transform-origin: top;
+    animation: ss-scroll-tick 2.2s ease-in-out infinite;
+  }
+  .ss-scroll-cue-text {
+    writing-mode: vertical-rl;
+    font-family: var(--font-inter);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #CBD5E1;
   }
 
   .ss-cta-btn {
@@ -55,29 +116,22 @@ const HOME_CSS = `
     transform: translateY(-2px);
   }
 
-  .ss-value-card {
+  .ss-value-tile {
     background: #1A1A1A;
     border-radius: 12px;
     padding: 32px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
-  .ss-value-card:hover { transform: translateY(-4px); }
-  .ss-value-card.ss-glow-purple:hover { border-color: rgba(124,58,237,0.6); box-shadow: 0 12px 32px rgba(124,58,237,0.2); }
-  .ss-value-card.ss-glow-cyan:hover { border-color: rgba(0,229,255,0.6); box-shadow: 0 12px 32px rgba(0,229,255,0.2); }
-  .ss-value-card.ss-glow-magenta:hover { border-color: rgba(255,45,149,0.6); box-shadow: 0 12px 32px rgba(255,45,149,0.2); }
-
-  .ss-world-card {
-    background: #1A1A1A;
-    border: 1px solid rgba(248,250,252,0.08);
-    border-radius: 12px;
-    padding: 28px;
-    transition: all 0.3s ease;
-  }
-  .ss-world-card:hover {
-    border-color: rgba(124,58,237,0.6);
-    box-shadow: 0 12px 32px rgba(124,58,237,0.18);
-    transform: translateY(-4px);
+  .ss-value-tile:hover { transform: translateY(-4px); }
+  .ss-value-tile.ss-glow-purple:hover { border-color: rgba(124,58,237,0.6); box-shadow: 0 12px 32px rgba(124,58,237,0.2); }
+  .ss-value-tile.ss-glow-cyan:hover { border-color: rgba(0,229,255,0.6); box-shadow: 0 12px 32px rgba(0,229,255,0.2); }
+  .ss-value-tile.ss-glow-magenta:hover { border-color: rgba(255,45,149,0.6); box-shadow: 0 12px 32px rgba(255,45,149,0.2); }
+  .ss-value-feature {
+    background: linear-gradient(155deg, rgba(124,58,237,0.18), rgba(10,10,10,0.4));
   }
 
   .ss-genre-pill {
@@ -124,38 +178,71 @@ const HOME_CSS = `
   }
   .ss-reveal.ss-visible { opacity: 1; transform: translateY(0); }
 
-  @media (max-width: 768px) {
-    .ss-values-grid { grid-template-columns: 1fr !important; }
-    .ss-world-grid { grid-template-columns: 1fr !important; }
-    .ss-section-pad { padding: 60px 16px !important; }
+  @media (max-width: 900px) {
+    .ss-hero-grid { grid-template-columns: 1fr !important; }
+    .ss-hero-panel-wrap { order: -1; }
+    .ss-hero-panel { max-width: 320px; margin: 0 auto; }
+    .ss-hero-title { text-align: center !important; }
+    .ss-hero-copy { align-items: center !important; text-align: center !important; }
+    .ss-scroll-cue { display: none; }
   }
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .ss-world-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  @media (max-width: 768px) {
+    .ss-values-grid { grid-template-columns: 1fr !important; grid-template-areas: none !important; }
+    .ss-values-grid > * { grid-area: auto !important; }
+    .ss-section-pad { padding: 60px 16px !important; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ss-hero-eyebrow, .ss-hero-title, .ss-hero-tagline, .ss-hero-quote, .ss-hero-cta, .ss-hero-scroll {
+    .ss-hero-eyebrow, .ss-hero-title, .ss-hero-tagline, .ss-hero-quote, .ss-hero-cta, .ss-hero-panel, .ss-scroll-cue-line {
       animation: none !important;
     }
     .ss-reveal { opacity: 1 !important; transform: none !important; }
   }
 `
 
-const VALUE_CARDS = [
-  { icon: Music, label: 'The Music', glow: 'ss-glow-purple', desc: 'Curated sets from underground selectors and international headliners.' },
-  { icon: Zap, label: 'The Energy', glow: 'ss-glow-cyan', desc: 'A dancefloor charged from the first drop to the last encore.' },
-  { icon: Sparkles, label: 'The Production', glow: 'ss-glow-magenta', desc: 'Immersive lighting, sound and staging built for the moment.' },
-  { icon: Users, label: 'The People', glow: 'ss-glow-purple', desc: 'A community that shows up for each other, every single time.' },
+const VALUE_TILES = [
+  {
+    icon: Music,
+    label: 'The Music',
+    glow: 'ss-glow-purple',
+    desc: 'Curated sets from underground selectors and international headliners.',
+    area: 'a',
+    feature: true,
+  },
+  {
+    icon: Zap,
+    label: 'The Energy',
+    glow: 'ss-glow-cyan',
+    desc: 'A dancefloor charged from the first drop to the last encore.',
+    area: 'b',
+    feature: false,
+  },
+  {
+    icon: Sparkles,
+    label: 'The Production',
+    glow: 'ss-glow-magenta',
+    desc: 'Immersive lighting, sound and staging built for the moment.',
+    area: 'c',
+    feature: false,
+  },
+  {
+    icon: Users,
+    label: 'The People',
+    glow: 'ss-glow-purple',
+    desc: 'A community that shows up for each other, every single time.',
+    area: 'd',
+    feature: false,
+  },
 ]
 
 const WORLD_ITEMS = [
-  { icon: Disc3, label: 'Underground Club Nights' },
-  { icon: Users, label: 'International & New Zealand Artists' },
-  { icon: Sparkles, label: 'Premium Sound & Lighting' },
-  { icon: Sun, label: 'Immersive Visual Experiences' },
-  { icon: PartyPopper, label: 'Creative Themes' },
-  { icon: Heart, label: 'Inclusive Dancefloors' },
-  { icon: Speaker, label: 'Unforgettable Memories' },
+  { label: 'Underground Club Nights' },
+  { label: 'International & New Zealand Artists' },
+  { label: 'Premium Sound & Lighting' },
+  { label: 'Immersive Visual Experiences' },
+  { label: 'Creative Themes' },
+  { label: 'Inclusive Dancefloors' },
+  { label: 'Unforgettable Memories' },
 ]
 
 const CLOSING_LINES = [
@@ -210,108 +297,109 @@ export function HomePage() {
           position: 'relative',
           minHeight: '100vh',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          padding: '120px 24px 60px',
+          padding: '160px 24px 100px',
           overflow: 'hidden',
         }}
       >
-        <Image
-          src="/images/hero/hero-dancefloor.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: 'cover', zIndex: -2 }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(10,10,10,0.55) 40%, #0A0A0A 100%)',
-            zIndex: -1,
-          }}
-        />
         <div className="ss-hero-glow" />
         <div className="ss-grain-overlay" />
-        <div className="ss-scanlines" />
-        <div className="ss-vignette" />
         <div className="ss-light-sweep" />
-        <ParticleField count={14} topRange={[40, 90]} />
+        <ParticleField count={10} topRange={[10, 90]} />
 
-        <span
-          className="ss-hero-eyebrow"
-          style={{
-            fontFamily: 'var(--font-inter)',
-            fontSize: '14px',
-            fontWeight: 600,
-            letterSpacing: '0.3em',
-            textTransform: 'uppercase',
-            color: '#CBD5E1',
-            marginBottom: '16px',
-          }}
-        >
-          Welcome To
-        </span>
+        <div className="ss-hero-grid">
+          <div className="ss-hero-copy" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <span
+              className="ss-hero-eyebrow"
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontSize: '14px',
+                fontWeight: 600,
+                letterSpacing: '0.3em',
+                textTransform: 'uppercase',
+                color: '#CBD5E1',
+                marginBottom: '16px',
+              }}
+            >
+              Welcome To
+            </span>
 
-        <h1
-          className="ss-hero-title"
-          style={{
-            fontFamily: 'var(--font-bebas)',
-            fontSize: 'clamp(3rem, 5vw + 2rem, 7.5rem)',
-            lineHeight: 0.95,
-            letterSpacing: '0.02em',
-            color: '#F8FAFC',
-            margin: 0,
-          }}
-        >
-          SIGNATURE SOCIALS
-        </h1>
+            <h1
+              className="ss-hero-title"
+              style={{
+                fontFamily: 'var(--font-bebas)',
+                fontSize: 'clamp(3.5rem, 4vw + 3rem, 8.5rem)',
+                lineHeight: 0.88,
+                letterSpacing: '0.01em',
+                color: '#F8FAFC',
+                margin: 0,
+                textAlign: 'left',
+              }}
+            >
+              SIGNATURE
+              <br />
+              SOCIALS
+            </h1>
 
-        <p
-          className="ss-hero-tagline"
-          style={{
-            fontFamily: 'var(--font-inter)',
-            fontSize: 'clamp(1rem, 1vw + 0.75rem, 1.375rem)',
-            color: '#00E5FF',
-            marginTop: '20px',
-            fontWeight: 500,
-          }}
-        >
-          New Zealand&apos;s Electronic Nightlife Collective
-        </p>
+            <p
+              className="ss-hero-tagline"
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontSize: 'clamp(1rem, 1vw + 0.75rem, 1.375rem)',
+                color: '#00E5FF',
+                marginTop: '24px',
+                fontWeight: 500,
+              }}
+            >
+              New Zealand&apos;s Electronic Nightlife Collective
+            </p>
 
-        <p
-          className="ss-hero-quote"
-          style={{
-            fontFamily: 'var(--font-inter)',
-            fontStyle: 'italic',
-            fontSize: '17px',
-            color: '#CBD5E1',
-            maxWidth: '560px',
-            marginTop: '24px',
-            lineHeight: 1.6,
-          }}
-        >
-          Some nights are forgotten. Others become stories you&apos;ll tell for years.
-        </p>
+            <p
+              className="ss-hero-quote"
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontStyle: 'italic',
+                fontSize: '17px',
+                color: '#CBD5E1',
+                maxWidth: '440px',
+                marginTop: '20px',
+                lineHeight: 1.6,
+              }}
+            >
+              Some nights are forgotten. Others become stories you&apos;ll tell for years.
+            </p>
 
-        <Link href="/experiences" className="ss-cta-btn ss-hero-cta" style={{ marginTop: '40px' }}>
-          Explore Experiences
-        </Link>
+            <Link href="/experiences" className="ss-cta-btn ss-hero-cta" style={{ marginTop: '36px' }}>
+              Explore Experiences
+            </Link>
+          </div>
 
-        <div
-          className="ss-hero-scroll"
-          style={{
-            position: 'absolute',
-            bottom: '32px',
-            left: '50%',
-            color: '#CBD5E1',
-          }}
-        >
-          <ChevronDown size={28} />
+          <div className="ss-hero-panel-wrap">
+            <div className="ss-hero-panel">
+              <Image
+                src="/images/hero/hero-dancefloor.png"
+                alt="A packed Signature Socials dancefloor under purple and cyan lasers"
+                fill
+                priority
+                sizes="(max-width: 900px) 320px, 420px"
+                style={{ objectFit: 'cover' }}
+              />
+              <div className="ss-scanlines" />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, transparent 50%, rgba(10,10,10,0.85) 100%)',
+                }}
+              />
+              <div className="ss-hero-panel-frame" />
+            </div>
+          </div>
+        </div>
+
+        <div className="ss-scroll-cue">
+          <div className="ss-scroll-cue-line" />
+          <span className="ss-scroll-cue-text">Scroll</span>
         </div>
       </section>
 
@@ -347,94 +435,93 @@ export function HomePage() {
         </RevealSection>
 
         <div
-          className="ss-values-grid ss-card-stagger"
+          className="ss-values-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '24px',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateRows: 'repeat(2, minmax(160px, auto))',
+            gridTemplateAreas: `"a a b b" "a a c d"`,
+            gap: '20px',
           }}
         >
-          {VALUE_CARDS.map(({ icon: Icon, label, glow, desc }) => (
-            <RevealSection key={label}>
-              <div className={`ss-value-card ${glow}`}>
-                <Icon size={28} color="#F8FAFC" style={{ marginBottom: '16px' }} />
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-bebas)',
-                    fontSize: '24px',
-                    color: '#F8FAFC',
-                    margin: '0 0 8px',
-                  }}
-                >
-                  {label}
-                </h3>
-                <p style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: '#CBD5E1', lineHeight: 1.6, margin: 0 }}>
-                  {desc}
-                </p>
-              </div>
-            </RevealSection>
+          {VALUE_TILES.map(({ icon: Icon, label, glow, desc, area, feature }) => (
+            <div key={label} style={{ gridArea: area }}>
+              <RevealSection>
+                <div className={`ss-value-tile ${glow} ${feature ? 'ss-value-feature' : ''}`} style={{ height: '100%' }}>
+                  <Icon size={feature ? 40 : 26} color="#F8FAFC" style={{ marginBottom: '16px' }} />
+                  <h3
+                    style={{
+                      fontFamily: 'var(--font-bebas)',
+                      fontSize: feature ? '34px' : '22px',
+                      color: '#F8FAFC',
+                      margin: '0 0 8px',
+                    }}
+                  >
+                    {label}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-inter)',
+                      fontSize: feature ? '15px' : '13px',
+                      color: '#CBD5E1',
+                      lineHeight: 1.6,
+                      margin: 0,
+                      maxWidth: feature ? '360px' : 'none',
+                    }}
+                  >
+                    {desc}
+                  </p>
+                </div>
+              </RevealSection>
+            </div>
           ))}
         </div>
       </section>
 
       {/* SECTION 3: Our World */}
-      <section className="ss-section-pad" style={{ padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
+      <section className="ss-section-pad" style={{ padding: '100px 24px', maxWidth: '900px', margin: '0 auto' }}>
         <RevealSection>
           <h2
             style={{
               fontFamily: 'var(--font-bebas)',
               fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
               color: '#F8FAFC',
-              marginBottom: '40px',
+              marginBottom: '32px',
             }}
           >
             Our World
           </h2>
         </RevealSection>
 
-        <div
-          className="ss-world-grid ss-card-stagger"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '20px',
-          }}
-        >
-          {WORLD_ITEMS.map(({ icon: Icon, label }) => (
-            <RevealSection key={label}>
-              <div className="ss-world-card">
-                <Icon size={24} color="#7C3AED" style={{ marginBottom: '12px' }} />
-                <p style={{ fontFamily: 'var(--font-inter)', fontSize: '15px', fontWeight: 500, color: '#F8FAFC', margin: 0 }}>
-                  {label}
-                </p>
-              </div>
-            </RevealSection>
-          ))}
-          <RevealSection>
-            <div className="ss-world-card">
-              <p style={{ fontFamily: 'var(--font-inter)', fontSize: '15px', fontWeight: 500, color: '#F8FAFC', margin: '0 0 4px' }}>
-                Genres
-              </p>
-              <div className="ss-genre-pill-container">
-                {['House', 'Techno', 'Trance', 'Progressive', 'Psytrance'].map((genre) => (
-                  <span key={genre} className="ss-genre-pill">
-                    {genre}
-                  </span>
-                ))}
-              </div>
+        <IndexList items={WORLD_ITEMS} accent="purple" />
+
+        <RevealSection>
+          <div style={{ marginTop: '40px', display: 'flex', alignItems: 'baseline', gap: '20px', flexWrap: 'wrap' }}>
+            <span
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: '#7C3AED',
+              }}
+            >
+              The Sound
+            </span>
+            <div className="ss-genre-pill-container">
+              {['House', 'Techno', 'Trance', 'Progressive', 'Psytrance'].map((genre) => (
+                <span key={genre} className="ss-genre-pill">
+                  {genre}
+                </span>
+              ))}
             </div>
-          </RevealSection>
-        </div>
+          </div>
+        </RevealSection>
       </section>
 
       {/* SECTION: Upcoming Events */}
-      <section
-        className="ss-section-pad"
-        style={{ padding: '100px 24px', background: '#1A1A1A', position: 'relative', overflow: 'hidden' }}
-      >
-        <div className="ss-light-sweep" />
-        <ParticleField count={6} topRange={[20, 80]} />
-
+      <section className="ss-section-pad" style={{ padding: '100px 24px', background: '#1A1A1A' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <RevealSection>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>

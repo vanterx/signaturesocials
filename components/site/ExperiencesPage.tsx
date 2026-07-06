@@ -3,9 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Speaker, Sun, Disc3, PartyPopper } from 'lucide-react'
-import { SectionHeading } from '@/components/site/SectionHeading'
 import { ParticleField } from '@/components/site/ParticleField'
+import { IndexList } from '@/components/site/IndexList'
 import { experiences } from '@/lib/experiences-data'
 
 const EXPERIENCES_CSS = `
@@ -43,23 +42,27 @@ const EXPERIENCES_CSS = `
     margin: 4px 8px 0 0;
   }
 
-  .ss-reason-card {
-    background: #1A1A1A;
-    border-radius: 12px;
-    padding: 28px;
-    text-align: center;
-    border-top: 1px solid rgba(248,250,252,0.12);
+  .ss-exp-ghost-number {
+    position: absolute;
+    top: 50%;
+    right: -4%;
+    transform: translateY(-50%);
+    font-family: var(--font-bebas);
+    font-size: clamp(10rem, 24vw, 22rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(124,58,237,0.25);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
   }
-  .ss-reason-icon-ring {
-    width: 56px;
-    height: 56px;
-    border-radius: 999px;
-    border: 1px solid rgba(124,58,237,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
-    box-shadow: 0 0 20px rgba(124,58,237,0.15);
+
+  .ss-exp-index {
+    font-family: var(--font-bebas);
+    font-size: clamp(3rem, 4vw + 1rem, 5rem);
+    color: rgba(124,58,237,0.35);
+    line-height: 1;
+    margin-bottom: -8px;
   }
 
   .ss-cta-btn {
@@ -92,10 +95,8 @@ const EXPERIENCES_CSS = `
   @media (max-width: 768px) {
     .ss-exp-row { flex-direction: column !important; }
     .ss-exp-image-wrap { aspect-ratio: 16/9 !important; }
-    .ss-reasons-grid { grid-template-columns: 1fr !important; }
-  }
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .ss-reasons-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .ss-exp-ghost-number { display: none; }
+    .ss-hero-title-lg { text-align: center !important; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -105,10 +106,10 @@ const EXPERIENCES_CSS = `
 `
 
 const REASONS = [
-  { icon: Speaker, label: 'Powerful Sound Systems', desc: 'Rigs tuned for clarity at full volume.' },
-  { icon: Sun, label: 'Immersive Lighting', desc: 'Lasers, haze and visuals built for the room.' },
-  { icon: Disc3, label: 'Carefully Curated DJs', desc: 'Selectors who understand the crowd.' },
-  { icon: PartyPopper, label: 'Packed Dancefloors', desc: 'Energy that feeds back into itself all night.' },
+  { label: 'Powerful Sound Systems', desc: 'Rigs tuned for clarity at full volume.' },
+  { label: 'Immersive Lighting', desc: 'Lasers, haze and visuals built for the room.' },
+  { label: 'Carefully Curated DJs', desc: 'Selectors who understand the crowd.' },
+  { label: 'Packed Dancefloors', desc: 'Energy that feeds back into itself all night.' },
 ]
 
 function useReveal<T extends HTMLElement>() {
@@ -151,11 +152,8 @@ export function ExperiencesPage() {
           position: 'relative',
           minHeight: '60vh',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          padding: '140px 24px 80px',
+          padding: '160px 24px 80px',
           overflow: 'hidden',
           background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(124,58,237,0.12) 50%, #0A0A0A 100%)',
         }}
@@ -163,72 +161,48 @@ export function ExperiencesPage() {
         <div className="ss-grain-overlay" />
         <div className="ss-light-sweep" />
         <ParticleField count={10} topRange={[15, 85]} />
-        <div
-          className="ss-float-shape"
-          style={{
-            position: 'absolute',
-            top: '15%',
-            left: '10%',
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            border: '2px solid rgba(124,58,237,0.4)',
-            boxShadow: '0 0 30px rgba(124,58,237,0.3)',
-          }}
-        />
-        <div
-          className="ss-float-shape"
-          style={{
-            position: 'absolute',
-            top: '60%',
-            right: '12%',
-            width: '60px',
-            height: '60px',
-            border: '2px solid rgba(0,229,255,0.4)',
-            boxShadow: '0 0 30px rgba(0,229,255,0.3)',
-            transform: 'rotate(45deg)',
-            animationDelay: '3s',
-          }}
-        />
-        <div
-          className="ss-float-shape"
-          style={{
-            position: 'absolute',
-            bottom: '12%',
-            left: '20%',
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            border: '2px solid rgba(255,45,149,0.4)',
-            boxShadow: '0 0 30px rgba(255,45,149,0.3)',
-            animationDelay: '6s',
-          }}
-        />
+        <span className="ss-exp-ghost-number">{String(experiences.length).padStart(2, '0')}</span>
 
-        <h1
-          style={{
-            fontFamily: 'var(--font-bebas)',
-            fontSize: 'clamp(2.75rem, 5vw + 1.5rem, 5.5rem)',
-            color: '#F8FAFC',
-            margin: 0,
-            lineHeight: 1,
-          }}
-        >
-          EVERY EVENT HAS A PULSE
-        </h1>
-        <p
-          style={{
-            fontFamily: 'var(--font-inter)',
-            fontSize: '17px',
-            color: '#CBD5E1',
-            maxWidth: '600px',
-            marginTop: '24px',
-            lineHeight: 1.6,
-          }}
-        >
-          No templates. No ordinary nights. Every Signature Socials experience is built with its own
-          identity, atmosphere and story.
-        </p>
+        <div className="ss-hero-title-lg" style={{ position: 'relative', zIndex: 1, maxWidth: '760px' }}>
+          <span
+            style={{
+              fontFamily: 'var(--font-inter)',
+              fontSize: '12px',
+              fontWeight: 600,
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+              color: '#7C3AED',
+            }}
+          >
+            {experiences.length} Signature Experiences
+          </span>
+          <h1
+            style={{
+              fontFamily: 'var(--font-bebas)',
+              fontSize: 'clamp(2.75rem, 6vw + 1rem, 6rem)',
+              color: '#F8FAFC',
+              margin: '12px 0 0',
+              lineHeight: 0.95,
+            }}
+          >
+            EVERY EVENT
+            <br />
+            HAS A PULSE
+          </h1>
+          <p
+            style={{
+              fontFamily: 'var(--font-inter)',
+              fontSize: '17px',
+              color: '#CBD5E1',
+              maxWidth: '480px',
+              marginTop: '24px',
+              lineHeight: 1.6,
+            }}
+          >
+            No templates. No ordinary nights. Every Signature Socials experience is built with its own
+            identity, atmosphere and story.
+          </p>
+        </div>
       </section>
 
       {/* SECTION 2: Experience Cards */}
@@ -271,6 +245,7 @@ export function ExperiencesPage() {
                 </div>
 
                 <div style={{ flex: '1 1 50%' }}>
+                  <div className="ss-exp-index">{String(index + 1).padStart(2, '0')}</div>
                   <h2
                     className="ss-exp-name"
                     style={{
@@ -326,27 +301,20 @@ export function ExperiencesPage() {
       </section>
 
       {/* SECTION 3: Why People Keep Coming Back */}
-      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 24px' }}>
+      <section style={{ maxWidth: '900px', margin: '0 auto', padding: '80px 24px' }}>
         <RevealSection>
-          <SectionHeading label="Signature Socials" title="Why People Keep Coming Back" align="center" />
+          <h2
+            style={{
+              fontFamily: 'var(--font-bebas)',
+              fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
+              color: '#F8FAFC',
+              marginBottom: '32px',
+            }}
+          >
+            Why People Keep Coming Back
+          </h2>
         </RevealSection>
-        <div className="ss-reasons-grid ss-card-stagger" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
-          {REASONS.map(({ icon: Icon, label, desc }) => (
-            <RevealSection key={label}>
-              <div className="ss-reason-card">
-                <div className="ss-reason-icon-ring">
-                  <Icon size={24} color="#7C3AED" />
-                </div>
-                <h3 style={{ fontFamily: 'var(--font-bebas)', fontSize: '20px', color: '#F8FAFC', margin: '0 0 8px' }}>
-                  {label}
-                </h3>
-                <p style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: '#CBD5E1', margin: 0, lineHeight: 1.5 }}>
-                  {desc}
-                </p>
-              </div>
-            </RevealSection>
-          ))}
-        </div>
+        <IndexList items={REASONS} accent="cyan" />
       </section>
 
       {/* SECTION 4: Closing Banner */}

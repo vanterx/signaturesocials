@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { Calendar, Megaphone, Ticket, Star, Camera, Users } from 'lucide-react'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { ParticleField } from '@/components/site/ParticleField'
+import { IndexList } from '@/components/site/IndexList'
 
 const ABOUT_CSS = `
   .ss-reveal {
@@ -14,33 +14,10 @@ const ABOUT_CSS = `
   }
   .ss-reveal.ss-visible { opacity: 1; transform: translateY(0); }
 
-  .ss-community-card {
-    background: #1A1A1A;
-    border-radius: 12px;
-    padding: 28px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .ss-community-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(124,58,237,0.18);
-  }
-  .ss-community-icon-circle {
-    width: 48px;
-    height: 48px;
-    border-radius: 999px;
-    background: rgba(124,58,237,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-  }
-
   @media (max-width: 900px) {
     .ss-story-row { flex-direction: column !important; }
-    .ss-community-grid { grid-template-columns: 1fr !important; }
-  }
-  @media (min-width: 901px) and (max-width: 1100px) {
-    .ss-community-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .ss-about-hero-row { flex-direction: column !important; align-items: center !important; text-align: center; }
+    .ss-about-hero-row .ss-about-accent-line { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -55,12 +32,12 @@ const STORY_PARAGRAPHS = [
 ]
 
 const COMMUNITY_ITEMS = [
-  { icon: Calendar, label: 'Upcoming Events' },
-  { icon: Megaphone, label: 'Artist Announcements' },
-  { icon: Ticket, label: 'Ticket Releases' },
-  { icon: Star, label: 'Exclusive Experiences' },
-  { icon: Camera, label: 'Behind-the-Scenes Content' },
-  { icon: Users, label: 'Community Stories' },
+  { label: 'Upcoming Events' },
+  { label: 'Artist Announcements' },
+  { label: 'Ticket Releases' },
+  { label: 'Exclusive Experiences' },
+  { label: 'Behind-the-Scenes Content' },
+  { label: 'Community Stories' },
 ]
 
 function useReveal<T extends HTMLElement>() {
@@ -103,11 +80,8 @@ export function AboutPage() {
           position: 'relative',
           minHeight: '50vh',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          padding: '140px 24px 60px',
+          padding: '160px 24px 60px',
           overflow: 'hidden',
           background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(124,58,237,0.1) 50%, #0A0A0A 100%)',
         }}
@@ -115,39 +89,60 @@ export function AboutPage() {
         <div className="ss-grain-overlay" />
         <div className="ss-light-sweep" />
         <ParticleField count={10} topRange={[15, 85]} />
-        <h1
-          style={{
-            fontFamily: 'var(--font-bebas)',
-            fontSize: 'clamp(2.5rem, 4.5vw + 1rem, 4.75rem)',
-            color: '#F8FAFC',
-            margin: 0,
-            maxWidth: '900px',
-            lineHeight: 1.05,
-          }}
-        >
-          CREATED BY PASSION. DRIVEN BY COMMUNITY.
-        </h1>
-        <p
-          style={{
-            fontFamily: 'var(--font-inter)',
-            fontSize: '17px',
-            color: '#CBD5E1',
-            maxWidth: '560px',
-            marginTop: '24px',
-            lineHeight: 1.6,
-          }}
-        >
-          Signature Socials was founded with a simple belief. Great music deserves unforgettable
-          experiences.
-        </p>
+
         <div
-          style={{
-            width: '80px',
-            height: '2px',
-            marginTop: '28px',
-            background: 'linear-gradient(90deg, #7C3AED 0%, #00E5FF 100%)',
-          }}
-        />
+          className="ss-about-hero-row"
+          style={{ position: 'relative', zIndex: 1, display: 'flex', gap: '32px', alignItems: 'stretch', maxWidth: '900px' }}
+        >
+          <div
+            className="ss-about-accent-line"
+            style={{
+              width: '2px',
+              flexShrink: 0,
+              background: 'linear-gradient(180deg, #7C3AED 0%, #00E5FF 100%)',
+            }}
+          />
+          <div>
+            <span
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.3em',
+                textTransform: 'uppercase',
+                color: '#7C3AED',
+              }}
+            >
+              Our Story
+            </span>
+            <h1
+              style={{
+                fontFamily: 'var(--font-bebas)',
+                fontSize: 'clamp(2.5rem, 5vw + 1rem, 5.5rem)',
+                color: '#F8FAFC',
+                margin: '12px 0 0',
+                lineHeight: 0.98,
+              }}
+            >
+              CREATED BY PASSION.
+              <br />
+              DRIVEN BY COMMUNITY.
+            </h1>
+            <p
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontSize: '17px',
+                color: '#CBD5E1',
+                maxWidth: '480px',
+                marginTop: '24px',
+                lineHeight: 1.6,
+              }}
+            >
+              Signature Socials was founded with a simple belief. Great music deserves unforgettable
+              experiences.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* SECTION 2: The Story */}
@@ -236,29 +231,15 @@ export function AboutPage() {
       </section>
 
       {/* SECTION 4: Join the Community */}
-      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 24px' }}>
+      <section style={{ maxWidth: '900px', margin: '0 auto', padding: '80px 24px' }}>
         <RevealSection>
           <SectionHeading
             label="Get Involved"
             title="Join the Community"
             subtitle="The next chapter starts on the dancefloor."
-            align="center"
           />
         </RevealSection>
-        <div className="ss-community-grid ss-card-stagger" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
-          {COMMUNITY_ITEMS.map(({ icon: Icon, label }) => (
-            <RevealSection key={label}>
-              <div className="ss-community-card">
-                <div className="ss-community-icon-circle">
-                  <Icon size={22} color="#7C3AED" />
-                </div>
-                <p style={{ fontFamily: 'var(--font-inter)', fontSize: '15px', fontWeight: 500, color: '#F8FAFC', margin: 0 }}>
-                  {label}
-                </p>
-              </div>
-            </RevealSection>
-          ))}
-        </div>
+        <IndexList items={COMMUNITY_ITEMS} accent="magenta" />
       </section>
 
       {/* SECTION 5: Closing Statement */}
