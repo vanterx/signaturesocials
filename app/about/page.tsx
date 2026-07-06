@@ -1,10 +1,6 @@
-import type { Metadata } from 'next'
-import { AboutPage } from '@/components/site/AboutPage'
+import { redirect } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'About | Signature Socials',
-}
-
+// About content now lives on the home page; keep old links working.
 export default function About() {
-  return <AboutPage />
+  redirect('/#about')
 }

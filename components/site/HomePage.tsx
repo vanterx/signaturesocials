@@ -2,11 +2,12 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Music, Zap, Sparkles, Users } from 'lucide-react'
 import { ParticleField } from '@/components/site/ParticleField'
 import { IndexList } from '@/components/site/IndexList'
 import { RevealSection } from '@/components/site/RevealSection'
+import { AboutSections } from '@/components/site/AboutSections'
 import { experiences } from '@/lib/experiences-data'
+import { VALUE_TILES, TICKER_ITEMS, REASONS, UPCOMING_EVENTS } from '@/lib/home-data'
 
 const HOME_CSS = `
   @keyframes ss-fade-in-up {
@@ -294,73 +295,6 @@ const HOME_CSS = `
     .ss-exp-image-wrap img { transition: none !important; }
   }
 `
-
-const VALUE_TILES = [
-  {
-    icon: Music,
-    label: 'The Music',
-    glow: 'ss-glow-purple',
-    accent: '#7C3AED',
-    desc: 'Curated sets from underground selectors and international headliners.',
-    area: 'a',
-    feature: true,
-  },
-  {
-    icon: Zap,
-    label: 'The Energy',
-    glow: 'ss-glow-cyan',
-    accent: '#00E5FF',
-    desc: 'A dancefloor charged from the first drop to the last encore.',
-    area: 'b',
-    feature: false,
-  },
-  {
-    icon: Sparkles,
-    label: 'The Production',
-    glow: 'ss-glow-magenta',
-    accent: '#FF2D95',
-    desc: 'Immersive lighting, sound and staging built for the moment.',
-    area: 'c',
-    feature: false,
-  },
-  {
-    icon: Users,
-    label: 'The People',
-    glow: 'ss-glow-purple',
-    accent: '#7C3AED',
-    desc: 'A community that shows up for each other, every single time.',
-    area: 'd',
-    feature: false,
-  },
-]
-
-const TICKER_ITEMS = [
-  { text: 'House', style: 'ss-ticker-solid-purple' },
-  { text: 'Techno', style: 'ss-ticker-outline' },
-  { text: 'Trance', style: 'ss-ticker-solid-cyan' },
-  { text: 'Progressive', style: 'ss-ticker-outline' },
-  { text: 'Psytrance', style: 'ss-ticker-solid-magenta' },
-  { text: 'Signature Socials', style: 'ss-ticker-outline' },
-]
-
-const REASONS = [
-  { label: 'Powerful Sound Systems', desc: 'Rigs tuned for clarity at full volume.' },
-  { label: 'Immersive Lighting', desc: 'Lasers, haze and visuals built for the room.' },
-  { label: 'Carefully Curated DJs', desc: 'Selectors who understand the crowd.' },
-  { label: 'Packed Dancefloors', desc: 'Energy that feeds back into itself all night.' },
-]
-
-const CLOSING_LINES = [
-  "It's anticipation before the first drop.",
-  "It's losing yourself in the music.",
-  "It's finding your people.",
-]
-
-const UPCOMING_EVENTS = [
-  { name: 'Spellbound Vol. 2', date: 'Coming Soon', venue: 'TBC, Auckland' },
-  { name: 'Anti Social — Winter Edition', date: 'Coming Soon', venue: 'TBC, Wellington' },
-  { name: 'Bass Ritual: Chapter One', date: 'Coming Soon', venue: 'TBC, Christchurch' },
-]
 
 function TickerRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
   return (
@@ -799,60 +733,8 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 7: More Than an Event */}
-      <section
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          padding: '120px 24px',
-          textAlign: 'center',
-          background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(124,58,237,0.08) 50%, #0A0A0A 100%)',
-        }}
-      >
-        <div className="ss-light-sweep" />
-        <ParticleField count={8} topRange={[20, 80]} />
-
-        <RevealSection>
-          <h2
-            className="ss-pulse-glow"
-            style={{
-              fontFamily: 'var(--font-bebas)',
-              fontSize: 'clamp(2.5rem, 4vw + 1rem, 4.5rem)',
-              color: '#F8FAFC',
-              marginBottom: '32px',
-            }}
-          >
-            More Than an Event. It&apos;s a Feeling.
-          </h2>
-        </RevealSection>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center', marginBottom: '48px' }}>
-          {CLOSING_LINES.map((line, i) => (
-            <RevealSection key={line}>
-              <p
-                style={{
-                  fontFamily: 'var(--font-inter)',
-                  fontSize: '18px',
-                  color: '#CBD5E1',
-                  margin: 0,
-                  transitionDelay: `${i * 0.15}s`,
-                }}
-              >
-                {line}
-              </p>
-            </RevealSection>
-          ))}
-        </div>
-
-        <RevealSection>
-          <p style={{ fontFamily: 'var(--font-inter)', fontSize: '16px', color: '#F8FAFC', marginBottom: '28px' }}>
-            Welcome to Signature Socials. Where the night begins.
-          </p>
-          <Link href="/about" className="ss-cta-btn">
-            Our Story
-          </Link>
-        </RevealSection>
-      </section>
+      {/* SECTION 7: About / Our Story / community closing (former /about page) */}
+      <AboutSections />
 
       {/* SECTION 8: Footer teaser */}
       <section style={{ padding: '48px 24px', textAlign: 'center' }}>

@@ -5,12 +5,11 @@ import { SectionHeading } from '@/components/site/SectionHeading'
 import { ParticleField } from '@/components/site/ParticleField'
 import { IndexList } from '@/components/site/IndexList'
 import { RevealSection } from '@/components/site/RevealSection'
+import { SOCIAL_LINKS } from '@/lib/constants'
 
 const ABOUT_CSS = `
   @media (max-width: 900px) {
     .ss-story-row { flex-direction: column !important; }
-    .ss-about-hero-row { flex-direction: column !important; align-items: center !important; text-align: center; }
-    .ss-about-hero-row .ss-about-accent-line { display: none; }
   }
 `
 
@@ -29,73 +28,17 @@ const COMMUNITY_ITEMS = [
   { label: 'Community Stories' },
 ]
 
-export function AboutPage() {
+// The former /about page, folded into the single-page home as anchored sections.
+export function AboutSections() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: ABOUT_CSS }} />
 
-      {/* SECTION 1: Hero */}
+      {/* Our Story */}
       <section
-        style={{
-          position: 'relative',
-          minHeight: '50vh',
-          display: 'flex',
-          alignItems: 'center',
-          padding: '160px 24px 60px',
-          overflow: 'hidden',
-          background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(124,58,237,0.1) 50%, #0A0A0A 100%)',
-        }}
+        id="about"
+        style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 24px', scrollMarginTop: '80px' }}
       >
-        <div className="ss-grain-overlay" />
-        <div className="ss-light-sweep" />
-        <ParticleField count={10} topRange={[15, 85]} />
-
-        <div
-          className="ss-about-hero-row"
-          style={{ position: 'relative', zIndex: 1, display: 'flex', gap: '32px', alignItems: 'stretch', maxWidth: '900px' }}
-        >
-          <div
-            className="ss-about-accent-line"
-            style={{
-              width: '2px',
-              flexShrink: 0,
-              background: 'linear-gradient(180deg, #7C3AED 0%, #00E5FF 100%)',
-            }}
-          />
-          <div>
-            <span className="ss-eyebrow">Our Story</span>
-            <h1
-              style={{
-                fontFamily: 'var(--font-bebas)',
-                fontSize: 'clamp(2.5rem, 5vw + 1rem, 5.5rem)',
-                color: '#F8FAFC',
-                margin: '12px 0 0',
-                lineHeight: 0.98,
-              }}
-            >
-              CREATED BY PASSION.
-              <br />
-              DRIVEN BY <span className="ss-gradient-text">COMMUNITY.</span>
-            </h1>
-            <p
-              style={{
-                fontFamily: 'var(--font-inter)',
-                fontSize: '17px',
-                color: '#CBD5E1',
-                maxWidth: '480px',
-                marginTop: '24px',
-                lineHeight: 1.6,
-              }}
-            >
-              Signature Socials was founded with a simple belief. Great music deserves unforgettable
-              experiences.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 2: The Story */}
-      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 24px' }}>
         <div className="ss-story-row" style={{ display: 'flex', gap: '56px', alignItems: 'center' }}>
           <RevealSection>
             <div style={{ flex: '1 1 50%' }}>
@@ -140,7 +83,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* SECTION 3: The Promise */}
+      {/* The Promise */}
       <section
         style={{
           background: '#1A1A1A',
@@ -179,8 +122,8 @@ export function AboutPage() {
         </RevealSection>
       </section>
 
-      {/* SECTION 4: Join the Community */}
-      <section style={{ maxWidth: '900px', margin: '0 auto', padding: '80px 24px' }}>
+      {/* Join the Community */}
+      <section style={{ maxWidth: '900px', margin: '0 auto', padding: '100px 24px' }}>
         <RevealSection>
           <SectionHeading
             label="Get Involved"
@@ -191,11 +134,11 @@ export function AboutPage() {
         <IndexList items={COMMUNITY_ITEMS} accent="magenta" />
       </section>
 
-      {/* SECTION 5: Closing Statement */}
+      {/* Closing statement */}
       <section
         style={{
           position: 'relative',
-          padding: '100px 24px',
+          padding: '120px 24px',
           textAlign: 'center',
           overflow: 'hidden',
         }}
@@ -221,6 +164,17 @@ export function AboutPage() {
         <ParticleField count={10} topRange={[20, 80]} />
 
         <RevealSection>
+          <h2
+            className="ss-pulse-glow"
+            style={{
+              fontFamily: 'var(--font-bebas)',
+              fontSize: 'clamp(2.5rem, 4vw + 1rem, 4.5rem)',
+              color: '#F8FAFC',
+              margin: '0 0 24px',
+            }}
+          >
+            More Than an Event. It&apos;s a Feeling.
+          </h2>
           <p
             style={{
               fontFamily: 'var(--font-inter)',
@@ -239,16 +193,21 @@ export function AboutPage() {
               fontSize: 'clamp(1.5rem, 2.5vw + 1rem, 2.25rem)',
               color: '#F8FAFC',
               maxWidth: '760px',
-              margin: '0 auto 28px',
+              margin: '0 auto 32px',
               lineHeight: 1.3,
             }}
           >
             Signature Socials — Where Every Night Becomes a Story. Where Every Beat Brings People
             Together. Welcome Home.
           </p>
-          <div style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: '#7C3AED', letterSpacing: '0.3em' }}>
-            {'///// ///// /////'}
-          </div>
+          <a
+            href={SOCIAL_LINKS.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ss-cta-btn"
+          >
+            Follow the Journey
+          </a>
         </RevealSection>
       </section>
     </>
