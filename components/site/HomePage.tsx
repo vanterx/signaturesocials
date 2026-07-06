@@ -379,8 +379,43 @@ function TickerRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
 }
 
 export function HomePage() {
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://signaturesocials.nz/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Experiences',
+        item: 'https://signaturesocials.nz/#experiences',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'About',
+        item: 'https://signaturesocials.nz/#about',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: 'Events',
+        item: 'https://signaturesocials.nz/events',
+      },
+    ],
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <style dangerouslySetInnerHTML={{ __html: HOME_CSS }} />
 
       {/* SECTION 1: Hero */}

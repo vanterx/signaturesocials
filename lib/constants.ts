@@ -8,6 +8,7 @@ export const COPYRIGHT_YEAR = 2026
 export const NAV_LINKS = [
   { label: 'HOME', href: '/' },
   { label: 'EXPERIENCES', href: '/#experiences' },
+  { label: 'EVENTS', href: '/events' },
   { label: 'ABOUT', href: '/#about' },
 ] as const
 
