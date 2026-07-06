@@ -1,0 +1,15 @@
+export const COLORS = {
+  midnight: '#0A0A0A',
+  midnightLight: '#1A1A1A',
+  midnightLighter: '#2A2A2A',
+  purple: '#7C3AED',
+  purpleLight: '#9D5CFF',
+  purpleDark: '#5B21B6',
+  white: '#F8FAFC',
+  whiteMuted: '#CBD5E1',
+  cyan: '#00E5FF',
+  cyanGlow: '#00E5FF',
+  magenta: '#FF2D95',
+  magentaGlow: '#FF2D95',
+  gradient: 'linear-gradient(135deg, #7C3AED 0%, #FF2D95 50%, #00E5FF 100%)',
+} as const
