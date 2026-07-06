@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
@@ -177,16 +178,15 @@ export function Nav() {
             justifyContent: 'space-between',
           }}
         >
-          <Link
-            href="/"
-            style={{
-              fontFamily: 'var(--font-bebas)',
-              fontSize: '24px',
-              letterSpacing: '0.08em',
-              color: '#F8FAFC',
-            }}
-          >
-            {SITE_NAME.toUpperCase()}
+          <Link href="/" aria-label={`${SITE_NAME} — home`} style={{ display: 'flex', alignItems: 'center' }}>
+            <Image
+              src="/images/brand/logo-white.png"
+              alt={SITE_NAME}
+              width={82}
+              height={44}
+              priority
+              style={{ width: 'auto', height: '40px' }}
+            />
           </Link>
 
           <div
