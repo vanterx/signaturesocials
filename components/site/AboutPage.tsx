@@ -99,6 +99,7 @@ export function AboutPage() {
       {/* SECTION 1: Hero */}
       <section
         style={{
+          position: 'relative',
           minHeight: '50vh',
           display: 'flex',
           flexDirection: 'column',
@@ -106,9 +107,11 @@ export function AboutPage() {
           justifyContent: 'center',
           textAlign: 'center',
           padding: '140px 24px 60px',
+          overflow: 'hidden',
           background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(124,58,237,0.1) 50%, #0A0A0A 100%)',
         }}
       >
+        <div className="ss-grain-overlay" />
         <h1
           style={{
             fontFamily: 'var(--font-bebas)',

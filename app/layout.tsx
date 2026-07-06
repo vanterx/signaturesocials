@@ -3,6 +3,8 @@ import { bebasNeue, inter } from '@/lib/fonts'
 import { SITE_NAME, SITE_DESCRIPTION } from '@/lib/constants'
 import { Nav } from '@/components/site/Nav'
 import { Footer } from '@/components/site/Footer'
+import { RouteProgress } from '@/components/site/RouteProgress'
+import { PageTransition } from '@/components/site/PageTransition'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -42,9 +44,10 @@ export default function RootLayout({
         <a href="#main-content" className="ss-skip-link">
           Skip to content
         </a>
+        <RouteProgress />
         <Nav />
         <main id="main-content" style={{ flex: 1 }}>
-          {children}
+          <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
       </body>

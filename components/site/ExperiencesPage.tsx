@@ -159,6 +159,7 @@ export function ExperiencesPage() {
           background: 'linear-gradient(180deg, #0A0A0A 0%, rgba(124,58,237,0.12) 50%, #0A0A0A 100%)',
         }}
       >
+        <div className="ss-grain-overlay" />
         <div
           className="ss-float-shape"
           style={{

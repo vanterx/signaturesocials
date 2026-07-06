@@ -205,6 +205,7 @@ export function HomePage() {
           }}
         />
         <div className="ss-hero-glow" />
+        <div className="ss-grain-overlay" />
 
         <span
           className="ss-hero-eyebrow"
