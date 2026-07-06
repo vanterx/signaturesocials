@@ -179,14 +179,15 @@ export function Nav() {
             justifyContent: 'space-between',
           }}
         >
-          <Link href="/" aria-label={`${SITE_NAME} — home`} style={{ display: 'flex', alignItems: 'center' }}>
+          <Link href="/" aria-label={`${SITE_NAME} — home`} style={{ display: 'flex', alignItems: 'center', lineHeight: 0 }}>
             <Image
-              src="/images/brand/logo-white.png"
+              src="/ss-monogram.svg"
               alt={SITE_NAME}
-              width={82}
+              width={44}
               height={44}
               priority
-              style={{ width: 'auto', height: '40px' }}
+              unoptimized
+              style={{ display: 'block' }}
             />
           </Link>
 
