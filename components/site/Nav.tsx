@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
-import { NAV_LINKS, SITE_NAME } from '@/lib/constants'
+import { NAV_LINKS, SITE_NAME, SOCIAL_LINKS } from '@/lib/constants'
 
 const NAV_CSS = `
   @keyframes ss-slide-down {
@@ -19,6 +19,26 @@ const NAV_CSS = `
 
   .ss-nav-border {
     animation: ss-nav-glow 6s ease-in-out infinite;
+  }
+
+  .ss-nav-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    color: #CBD5E1;
+    transition: all 0.2s ease;
+  }
+  .ss-nav-social-icon:hover {
+    color: #7C3AED;
+    box-shadow: 0 0 12px rgba(124,58,237,0.4);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .ss-nav-social-bar { display: none !important; }
   }
 
   .ss-nav-link {
@@ -137,6 +157,51 @@ export function Nav() {
                 {link.label}
               </Link>
             ))}
+          </div>
+
+          <div
+            className="ss-nav-social-bar"
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '8px' }}
+          >
+            <a
+              href={SOCIAL_LINKS.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ss-nav-social-icon"
+              aria-label="Instagram"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a
+              href={SOCIAL_LINKS.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ss-nav-social-icon"
+              aria-label="Facebook"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+            <a
+              href={SOCIAL_LINKS.mixcloud}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ss-nav-social-icon"
+              aria-label="Mixcloud"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z" />
+                <path d="M8 10v4" />
+                <path d="M10 11v2" />
+                <path d="M14 11v2" />
+                <path d="M16 10v4" />
+              </svg>
+            </a>
           </div>
 
           <button

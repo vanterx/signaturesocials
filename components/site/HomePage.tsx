@@ -164,6 +164,12 @@ const CLOSING_LINES = [
   "It's finding your people.",
 ]
 
+const UPCOMING_EVENTS = [
+  { name: 'Spellbound Vol. 2', date: 'Coming Soon', venue: 'TBC, Auckland' },
+  { name: 'Anti Social — Winter Edition', date: 'Coming Soon', venue: 'TBC, Wellington' },
+  { name: 'Bass Ritual: Chapter One', date: 'Coming Soon', venue: 'TBC, Christchurch' },
+]
+
 function useReveal<T extends HTMLElement>() {
   const ref = useRef<T>(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -418,6 +424,131 @@ export function HomePage() {
               </div>
             </div>
           </RevealSection>
+        </div>
+      </section>
+
+      {/* SECTION: Upcoming Events */}
+      <section
+        className="ss-section-pad"
+        style={{ padding: '100px 24px', background: '#1A1A1A', position: 'relative', overflow: 'hidden' }}
+      >
+        <div className="ss-light-sweep" />
+        <ParticleField count={6} topRange={[20, 80]} />
+
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <RevealSection>
+            <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-inter)',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  letterSpacing: '0.25em',
+                  textTransform: 'uppercase',
+                  color: '#7C3AED',
+                }}
+              >
+                Don&apos;t Miss
+              </span>
+              <h2
+                style={{
+                  fontFamily: 'var(--font-bebas)',
+                  fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
+                  color: '#F8FAFC',
+                  margin: '12px 0 0',
+                }}
+              >
+                Upcoming Events
+              </h2>
+            </div>
+          </RevealSection>
+
+          <div
+            className="ss-card-stagger"
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}
+          >
+            {UPCOMING_EVENTS.map((event) => (
+              <RevealSection key={event.name}>
+                <div
+                  style={{
+                    background: '#0A0A0A',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(124,58,237,0.25)',
+                    padding: '32px',
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(124,58,237,0.7)'
+                    e.currentTarget.style.boxShadow = '0 12px 32px rgba(124,58,237,0.2)'
+                    e.currentTarget.style.transform = 'translateY(-4px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(124,58,237,0.25)'
+                    e.currentTarget.style.boxShadow = 'none'
+                    e.currentTarget.style.transform = 'none'
+                  }}
+                >
+                  <div style={{ fontFamily: 'var(--font-bebas)', fontSize: '24px', color: '#F8FAFC', marginBottom: '4px' }}>
+                    {event.name}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-inter)', fontSize: '13px', color: '#00E5FF', fontWeight: 600, marginBottom: '16px' }}>
+                    {event.date}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-inter)', fontSize: '13px', color: '#CBD5E1', marginBottom: '20px' }}>
+                    {event.venue}
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-inter)',
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        color: '#F8FAFC',
+                        background: '#7C3AED',
+                        padding: '8px 16px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#9D5CFF'
+                        e.currentTarget.style.boxShadow = '0 0 16px rgba(124,58,237,0.5)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = '#7C3AED'
+                        e.currentTarget.style.boxShadow = 'none'
+                      }}
+                    >
+                      Get Tickets
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-inter)',
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        color: '#7C3AED',
+                        border: '1px solid rgba(124,58,237,0.5)',
+                        padding: '8px 16px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = '#7C3AED'
+                        e.currentTarget.style.background = 'rgba(124,58,237,0.1)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.5)'
+                        e.currentTarget.style.background = 'transparent'
+                      }}
+                    >
+                      FB Event
+                    </span>
+                  </div>
+                </div>
+              </RevealSection>
+            ))}
+          </div>
         </div>
       </section>
 

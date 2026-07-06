@@ -14,4 +14,5 @@ export const NAV_LINKS = [
 export const SOCIAL_LINKS = {
   instagram: 'https://instagram.com/signaturesocials',
   facebook: 'https://facebook.com/signaturesocials',
+  mixcloud: 'https://mixcloud.com/signaturesocials',
 } as const

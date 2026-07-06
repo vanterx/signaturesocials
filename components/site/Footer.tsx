@@ -21,6 +21,18 @@ function FacebookIcon() {
   )
 }
 
+function MixcloudIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z" />
+      <path d="M8 10v4" />
+      <path d="M10 11v2" />
+      <path d="M14 11v2" />
+      <path d="M16 10v4" />
+    </svg>
+  )
+}
+
 const FOOTER_CSS = `
   .ss-footer-link {
     font-family: var(--font-inter);
@@ -98,6 +110,74 @@ export function Footer() {
           <p style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: '#CBD5E1' }}>
             Produced by 3333 Events &amp; Productions
           </p>
+
+          <div>
+            <p
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: '#7C3AED',
+                marginBottom: '8px',
+              }}
+            >
+              Stay in the Loop
+            </p>
+            {/* Placeholder form: not yet wired to an email provider or API route */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+              }}
+              style={{ display: 'flex', gap: '8px' }}
+            >
+              <input
+                type="email"
+                placeholder="Your email"
+                required
+                style={{
+                  background: '#1A1A1A',
+                  border: '1px solid rgba(124,58,237,0.3)',
+                  borderRadius: '4px',
+                  padding: '10px 14px',
+                  fontFamily: 'var(--font-inter)',
+                  fontSize: '13px',
+                  color: '#F8FAFC',
+                  outline: 'none',
+                  width: '180px',
+                }}
+                onFocus={(e) => (e.target.style.borderColor = '#7C3AED')}
+                onBlur={(e) => (e.target.style.borderColor = 'rgba(124,58,237,0.3)')}
+              />
+              <button
+                type="submit"
+                style={{
+                  background: '#7C3AED',
+                  color: '#F8FAFC',
+                  border: 'none',
+                  borderRadius: '4px',
+                  padding: '10px 18px',
+                  fontFamily: 'var(--font-inter)',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#9D5CFF'
+                  e.currentTarget.style.boxShadow = '0 0 16px rgba(124,58,237,0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#7C3AED'
+                  e.currentTarget.style.boxShadow = 'none'
+                }}
+              >
+                Join
+              </button>
+            </form>
+          </div>
+
           <div style={{ display: 'flex', gap: '12px' }}>
             <a
               href={SOCIAL_LINKS.instagram}
@@ -116,6 +196,15 @@ export function Footer() {
               aria-label="Facebook"
             >
               <FacebookIcon />
+            </a>
+            <a
+              href={SOCIAL_LINKS.mixcloud}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ss-social-icon"
+              aria-label="Mixcloud"
+            >
+              <MixcloudIcon />
             </a>
           </div>
         </div>
