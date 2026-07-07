@@ -70,6 +70,9 @@ const FOOTER_CSS = `
   @media (max-width: 768px) {
     .ss-footer-row { flex-direction: column !important; text-align: center; gap: 32px !important; }
     .ss-footer-nav { align-items: center !important; }
+    .ss-footer-brand { align-items: center !important; }
+    .ss-footer-connect { align-items: center !important; }
+    .ss-newsletter-input { max-width: 100%; }
   }
 `
 
@@ -95,7 +98,7 @@ export function Footer() {
           gap: '24px',
         }}
       >
-        <div style={{ maxWidth: '320px' }}>
+        <div className="ss-footer-brand" style={{ maxWidth: '320px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Image
             src="/images/brand/logo-white.png"
             alt={SITE_NAME}
@@ -116,7 +119,7 @@ export function Footer() {
           ))}
         </nav>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+        <div className="ss-footer-connect" style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
           <p style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: '#CBD5E1' }}>
             Produced by 3333 Events &amp; Productions
           </p>

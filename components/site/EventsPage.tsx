@@ -104,6 +104,9 @@ const EVENTS_CSS = `
       grid-template-columns: 1fr;
       gap: 12px;
     }
+    .ss-event-date-block {
+      text-align: left;
+    }
     .ss-event-cta {
       width: 100%;
     }

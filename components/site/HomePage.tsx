@@ -355,6 +355,8 @@ const HOME_CSS = `
     .ss-values-grid { grid-template-columns: 1fr !important; }
     .ss-values-grid .ss-value-offset { margin-top: 0 !important; }
     .ss-section-pad { padding: 60px 16px !important; }
+    .ss-value-item { padding-top: 24px !important; }
+    .ss-value-num { font-size: clamp(2.5rem, 16vw, 3.5rem) !important; top: -4px !important; }
     .ss-exp-row { flex-direction: column !important; }
     .ss-exp-image-wrap { aspect-ratio: 16/9 !important; }
     .ss-event-row { padding: 22px 12px; }
