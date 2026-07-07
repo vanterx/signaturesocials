@@ -344,11 +344,29 @@ const HOME_CSS = `
   }
 
   @media (max-width: 900px) {
-    .ss-hero-grid { grid-template-columns: 1fr !important; }
-    .ss-hero-panel-wrap { order: -1; }
-    .ss-hero-panel { max-width: 320px; margin: 0 auto; }
+    /* Mobile hero: the photo becomes a full-bleed background filling
+       .ss-hero-grid (already position:relative), and the copy overlays
+       on top of it, instead of stacking as separate image-then-text blocks. */
+    .ss-hero-grid { grid-template-columns: 1fr !important; min-height: 60vh; }
+    .ss-hero-panel-wrap { position: absolute !important; inset: 0 !important; z-index: 0; }
+    .ss-hero-panel {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      aspect-ratio: auto !important;
+      margin: 0 !important;
+      transform: none !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .ss-hero-panel-frame { display: none !important; }
+    .ss-hero-panel-scrim {
+      background: linear-gradient(180deg, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.9) 100%) !important;
+    }
     .ss-hero-title { text-align: center !important; }
-    .ss-hero-copy { align-items: center !important; text-align: center !important; }
+    .ss-hero-copy { position: relative; z-index: 2; align-items: center !important; text-align: center !important; padding: 32px 8px; }
+    .ss-hero-glow, .ss-laser { display: none !important; }
     .ss-scroll-cue { display: none; }
   }
   @media (max-width: 768px) {
@@ -518,11 +536,12 @@ export function HomePage() {
                 alt="A packed Signature Socials dancefloor under purple and cyan lasers"
                 fill
                 priority
-                sizes="(max-width: 900px) 320px, 420px"
+                sizes="(max-width: 900px) 100vw, 420px"
                 style={{ objectFit: 'cover' }}
               />
               <div className="ss-scanlines" />
               <div
+                className="ss-hero-panel-scrim"
                 style={{
                   position: 'absolute',
                   inset: 0,
