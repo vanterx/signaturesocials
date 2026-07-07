@@ -47,14 +47,15 @@ const EVENTS_CSS = `
     margin-bottom: 6px;
   }
   .ss-event-date-text {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(1.8rem, 1vw + 1.4rem, 2.4rem);
     line-height: 1;
     color: transparent;
     -webkit-text-stroke: 1px rgba(248,250,252,0.5);
   }
   .ss-event-info h3 {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
     font-size: clamp(1.7rem, 1.2vw + 1.2rem, 2.2rem);
     color: #F8FAFC;
     margin: 0 0 6px;
@@ -102,6 +103,9 @@ const EVENTS_CSS = `
     .ss-event-list-row {
       grid-template-columns: 1fr;
       gap: 12px;
+    }
+    .ss-event-date-block {
+      text-align: left;
     }
     .ss-event-cta {
       width: 100%;
@@ -172,7 +176,7 @@ export function EventsPage() {
           </span>
           <h1
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2.75rem, 6vw + 1rem, 6rem)',
               color: '#F8FAFC',
               margin: '0 0 24px',
@@ -236,7 +240,7 @@ export function EventsPage() {
         <RevealSection>
           <h2
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
               color: '#F8FAFC',
               marginBottom: '24px',

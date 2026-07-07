@@ -10,6 +10,8 @@ import { SOCIAL_LINKS } from '@/lib/constants'
 const ABOUT_CSS = `
   @media (max-width: 900px) {
     .ss-story-row { flex-direction: column !important; }
+    .ss-story-text { flex: none !important; width: 100% !important; }
+    .ss-story-image { flex: none !important; width: 100% !important; }
   }
 `
 
@@ -41,7 +43,7 @@ export function AboutSections() {
       >
         <div className="ss-story-row" style={{ display: 'flex', gap: '56px', alignItems: 'center' }}>
           <RevealSection>
-            <div style={{ flex: '1 1 50%' }}>
+            <div className="ss-story-text" style={{ flex: '1 1 50%' }}>
               <SectionHeading label="Since Day One" title="Our Story" />
               {STORY_PARAGRAPHS.map((paragraph) => (
                 <p
@@ -62,6 +64,7 @@ export function AboutSections() {
 
           <RevealSection>
             <div
+              className="ss-story-image"
               style={{
                 flex: '1 1 50%',
                 position: 'relative',
@@ -96,7 +99,9 @@ export function AboutSections() {
           <p
             className="ss-pulse-glow"
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
+              fontWeight: 300,
+              textTransform: 'uppercase',
               fontSize: 'clamp(2rem, 3.5vw + 1rem, 3.25rem)',
               color: '#F8FAFC',
               fontStyle: 'italic',
@@ -167,7 +172,7 @@ export function AboutSections() {
           <h2
             className="ss-pulse-glow"
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2.5rem, 4vw + 1rem, 4.5rem)',
               color: '#F8FAFC',
               margin: '0 0 24px',
@@ -189,7 +194,9 @@ export function AboutSections() {
           </p>
           <p
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
+              fontWeight: 300,
+              textTransform: 'uppercase',
               fontSize: 'clamp(1.5rem, 2.5vw + 1rem, 2.25rem)',
               color: '#F8FAFC',
               maxWidth: '760px',

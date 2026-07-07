@@ -150,7 +150,8 @@ const HOME_CSS = `
   }
   .ss-ticker:hover .ss-ticker-track { animation-play-state: paused; }
   .ss-ticker-item {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);
     letter-spacing: 0.06em;
     padding: 0 28px;
@@ -172,7 +173,8 @@ const HOME_CSS = `
     position: absolute;
     top: -12px;
     left: -6px;
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(4.5rem, 4vw + 3rem, 7rem);
     line-height: 1;
     color: transparent;
@@ -186,7 +188,7 @@ const HOME_CSS = `
   .ss-value-label {
     position: relative;
     z-index: 1;
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
     font-size: clamp(2rem, 1.5vw + 1.5rem, 2.75rem);
     color: #F8FAFC;
     margin: 0 0 12px;
@@ -232,7 +234,8 @@ const HOME_CSS = `
   }
 
   .ss-exp-index {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(3rem, 4vw + 1rem, 5rem);
     color: rgba(124,58,237,0.35);
     line-height: 1;
@@ -282,14 +285,16 @@ const HOME_CSS = `
     margin-bottom: 4px;
   }
   .ss-event-date-main {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(1.6rem, 1vw + 1.25rem, 2.2rem);
     line-height: 1;
     color: transparent;
     -webkit-text-stroke: 1px rgba(248,250,252,0.5);
   }
   .ss-event-name {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: clamp(1.6rem, 1.5vw + 1rem, 2.4rem);
     line-height: 1.05;
     color: #F8FAFC;
@@ -339,19 +344,39 @@ const HOME_CSS = `
   }
 
   @media (max-width: 900px) {
-    .ss-hero-grid { grid-template-columns: 1fr !important; }
-    .ss-hero-panel-wrap { order: -1; }
-    .ss-hero-panel { max-width: 320px; margin: 0 auto; }
+    /* Mobile hero: the photo becomes a full-bleed background filling
+       .ss-hero-grid (already position:relative), and the copy overlays
+       on top of it, instead of stacking as separate image-then-text blocks. */
+    .ss-hero-grid { grid-template-columns: 1fr !important; min-height: 60vh; }
+    .ss-hero-panel-wrap { position: absolute !important; inset: 0 !important; z-index: 0; }
+    .ss-hero-panel {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      aspect-ratio: auto !important;
+      margin: 0 !important;
+      transform: none !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .ss-hero-panel-frame { display: none !important; }
+    .ss-hero-panel-scrim {
+      background: linear-gradient(180deg, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.9) 100%) !important;
+    }
     .ss-hero-title { text-align: center !important; }
-    .ss-hero-copy { align-items: center !important; text-align: center !important; }
+    .ss-hero-copy { position: relative; z-index: 2; align-items: center !important; text-align: center !important; padding: 32px 8px; }
+    .ss-hero-glow, .ss-laser { display: none !important; }
     .ss-scroll-cue { display: none; }
   }
   @media (max-width: 768px) {
     .ss-values-grid { grid-template-columns: 1fr !important; }
     .ss-values-grid .ss-value-offset { margin-top: 0 !important; }
     .ss-section-pad { padding: 60px 16px !important; }
+    .ss-value-item { padding-top: 24px !important; }
+    .ss-value-num { font-size: clamp(2.5rem, 16vw, 3.5rem) !important; top: -4px !important; }
     .ss-exp-row { flex-direction: column !important; }
-    .ss-exp-image-wrap { aspect-ratio: 16/9 !important; }
+    .ss-exp-image-wrap { aspect-ratio: 16/9 !important; width: 100% !important; flex: none !important; }
     .ss-event-row { padding: 22px 12px; }
     .ss-event-actions { width: 100%; }
   }
@@ -457,7 +482,7 @@ export function HomePage() {
             <h1
               className="ss-hero-title"
               style={{
-                fontFamily: 'var(--font-bebas)',
+                fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(3.5rem, 4vw + 3rem, 8.5rem)',
                 lineHeight: 0.88,
                 letterSpacing: '0.01em',
@@ -511,11 +536,12 @@ export function HomePage() {
                 alt="A packed Signature Socials dancefloor under purple and cyan lasers"
                 fill
                 priority
-                sizes="(max-width: 900px) 320px, 420px"
+                sizes="(max-width: 900px) 100vw, 420px"
                 style={{ objectFit: 'cover' }}
               />
               <div className="ss-scanlines" />
               <div
+                className="ss-hero-panel-scrim"
                 style={{
                   position: 'absolute',
                   inset: 0,
@@ -546,7 +572,7 @@ export function HomePage() {
         <RevealSection>
           <h2
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
               color: '#F8FAFC',
               marginBottom: '20px',
@@ -615,7 +641,7 @@ export function HomePage() {
           <span className="ss-eyebrow">{experiences.length} Signature Experiences</span>
           <h2
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2.5rem, 4vw + 1rem, 4.5rem)',
               color: '#F8FAFC',
               margin: '12px 0 16px',
@@ -682,7 +708,7 @@ export function HomePage() {
                     <h3
                       className="ss-exp-name"
                       style={{
-                        fontFamily: 'var(--font-bebas)',
+                        fontFamily: 'var(--font-display)',
                         fontSize: 'clamp(2.5rem, 4vw + 1rem, 4rem)',
                         color: '#F8FAFC',
                         margin: 0,
@@ -739,7 +765,7 @@ export function HomePage() {
         <RevealSection>
           <h2
             style={{
-              fontFamily: 'var(--font-bebas)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
               color: '#F8FAFC',
               marginBottom: '32px',
@@ -779,7 +805,7 @@ export function HomePage() {
               <span className="ss-eyebrow">Don&apos;t Miss</span>
               <h2
                 style={{
-                  fontFamily: 'var(--font-bebas)',
+                  fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
                   color: '#F8FAFC',
                   margin: '12px 0 0',
@@ -837,7 +863,9 @@ export function HomePage() {
         />
         <p
           style={{
-            fontFamily: 'var(--font-bebas)',
+            fontFamily: 'var(--font-display)',
+            fontWeight: 300,
+            textTransform: 'uppercase',
             fontSize: '22px',
             letterSpacing: '0.08em',
             color: '#CBD5E1',

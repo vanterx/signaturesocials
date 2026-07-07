@@ -1,9 +1,11 @@
-import { Bebas_Neue, Inter } from 'next/font/google'
+import { Oswald, Inter } from 'next/font/google'
 
-export const bebasNeue = Bebas_Neue({
+// Oswald Light matches the official logo wordmark (tall thin condensed gothic);
+// Bebas Neue was replaced because its heavier, rounder letterforms clashed with it.
+export const oswald = Oswald({
   subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-bebas',
+  weight: ['300', '400'],
+  variable: '--font-display',
   display: 'swap',
 })
 

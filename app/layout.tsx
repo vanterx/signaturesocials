@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { bebasNeue, inter } from '@/lib/fonts'
+import { oswald, inter } from '@/lib/fonts'
 import { SITE_NAME, SITE_DESCRIPTION } from '@/lib/constants'
 import { Nav } from '@/components/site/Nav'
 import { Footer } from '@/components/site/Footer'
@@ -61,7 +61,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en" className={`${bebasNeue.variable} ${inter.variable}`}>
+    <html lang="en" className={`${oswald.variable} ${inter.variable}`}>
       <head>
         <script
           type="application/ld+json"

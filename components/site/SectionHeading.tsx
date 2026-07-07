@@ -35,7 +35,7 @@ export function SectionHeading({ label, title, subtitle, align = 'left' }: Secti
       )}
       <h2
         style={{
-          fontFamily: 'var(--font-bebas)',
+          fontFamily: 'var(--font-display)',
           fontSize: 'clamp(2.25rem, 4vw + 1rem, 3.75rem)',
           lineHeight: 1.05,
           letterSpacing: '0.02em',

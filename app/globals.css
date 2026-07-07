@@ -32,6 +32,15 @@ a {
   text-decoration: none;
 }
 
+/* The display font (Oswald Light, matching the logo wordmark) replaces Bebas Neue,
+   which was caps-only and single-weight — so caps and lightness must be explicit. */
+h1,
+h2,
+h3 {
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
 ::selection {
   background: rgba(124, 58, 237, 0.6);
   color: #f8fafc;

@@ -87,7 +87,8 @@ const NAV_CSS = `
   }
 
   .ss-mobile-link {
-    font-family: var(--font-bebas);
+    font-family: var(--font-display);
+    font-weight: 300;
     font-size: 42px;
     letter-spacing: 0.05em;
     color: #F8FAFC;
@@ -178,14 +179,14 @@ export function Nav() {
             justifyContent: 'space-between',
           }}
         >
-          <Link href="/" aria-label={`${SITE_NAME} — home`} style={{ display: 'flex', alignItems: 'center' }}>
+          <Link href="/" aria-label={`${SITE_NAME} — home`} style={{ display: 'flex', alignItems: 'center', lineHeight: 0 }}>
             <Image
               src="/images/brand/logo-white.png"
               alt={SITE_NAME}
-              width={82}
-              height={44}
+              width={209}
+              height={112}
               priority
-              style={{ width: 'auto', height: '40px' }}
+              style={{ display: 'block', width: 'auto', height: '38px' }}
             />
           </Link>
 
