@@ -67,11 +67,14 @@ const FOOTER_CSS = `
     box-shadow: 0 0 16px rgba(124,58,237,0.5);
   }
 
+  .ss-footer-logo { height: 72px; }
+
   @media (max-width: 768px) {
     .ss-footer-row { flex-direction: column !important; text-align: center; gap: 32px !important; }
     .ss-footer-nav { align-items: center !important; }
     .ss-footer-brand { align-items: center !important; }
     .ss-footer-connect { align-items: center !important; }
+    .ss-footer-logo { height: 52px; }
     .ss-newsletter-input { max-width: 100%; }
   }
 `
@@ -100,11 +103,13 @@ export function Footer() {
       >
         <div className="ss-footer-brand" style={{ maxWidth: '320px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Image
+            className="ss-footer-logo"
             src="/images/brand/logo-white.png"
             alt={SITE_NAME}
-            width={209}
-            height={112}
-            style={{ display: 'block', width: 'auto', height: '52px', marginBottom: '16px' }}
+            width={2508}
+            height={1344}
+            quality={100}
+            style={{ display: 'block', width: 'auto', marginBottom: '16px' }}
           />
           <p style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: '#CBD5E1', lineHeight: 1.6 }}>
             {SITE_TAGLINE}

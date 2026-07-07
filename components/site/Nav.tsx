@@ -39,8 +39,11 @@ const NAV_CSS = `
     transform: translateY(-1px);
   }
 
+  .ss-nav-logo { height: 48px; }
+
   @media (max-width: 768px) {
     .ss-nav-social-bar { display: none !important; }
+    .ss-nav-logo { height: 36px; }
   }
 
   .ss-nav-link {
@@ -181,12 +184,14 @@ export function Nav() {
         >
           <Link href="/" aria-label={`${SITE_NAME} — home`} style={{ display: 'flex', alignItems: 'center', lineHeight: 0 }}>
             <Image
+              className="ss-nav-logo"
               src="/images/brand/logo-white.png"
               alt={SITE_NAME}
-              width={209}
-              height={112}
+              width={2508}
+              height={1344}
+              quality={100}
               priority
-              style={{ display: 'block', width: 'auto', height: '38px' }}
+              style={{ display: 'block', width: 'auto' }}
             />
           </Link>
 
