@@ -358,7 +358,7 @@ const HOME_CSS = `
     .ss-value-item { padding-top: 24px !important; }
     .ss-value-num { font-size: clamp(2.5rem, 16vw, 3.5rem) !important; top: -4px !important; }
     .ss-exp-row { flex-direction: column !important; }
-    .ss-exp-image-wrap { aspect-ratio: 16/9 !important; }
+    .ss-exp-image-wrap { aspect-ratio: 16/9 !important; width: 100% !important; flex: none !important; }
     .ss-event-row { padding: 22px 12px; }
     .ss-event-actions { width: 100%; }
   }
